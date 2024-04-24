@@ -17,7 +17,7 @@ app.get("/joke", async (req, res) => {
   const apiKey = process.env.OPENAI_API_KEY;
 
   const completion = await openai.chat.completions.create({
-    messeges: [
+    messages: [
       {
         role: "user",
         content: "Tell me a story",
