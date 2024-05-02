@@ -45,16 +45,10 @@ app.post("/users", async (req, res) => {
     );
     const userId = userResult.insertId; // Få det nya användar-ID:t
 
-    // Skapa ett konto för användaren i accounts-tabellen
-    await query(
-      "INSERT INTO accounts (user_id, balance) VALUES (?, ?)",
-      [userId, 0] // Skapa med 0 kr som saldo
-    );
-
-    res.status(201).send("User and account created");
+    res.status(201).send("User created");
   } catch (error) {
-    console.error("Error creating user and account", error);
-    res.status(500).send("Error creating user and account");
+    console.error("Error creating user", error);
+    res.status(500).send("Error creating user");
   }
 });
 
