@@ -14,7 +14,7 @@ export default function Home() {
       <h1 className="text-4xl font-bold mb-2 text-white">FairyTailor</h1>
       <p className="mb-10 text-lg text-white">This is a storytelling app</p>
       <button className="bg-yellow-300 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded-full mb-4 border-none">
-        <Link href="/start-story">
+        <Link href="/storyTeller">
           <span>Start a Story</span>
         </Link>
       </button>
@@ -23,10 +23,10 @@ export default function Home() {
           <span>Log in</span>
         </Link>
       </button>
-      <Link href="/CreateAccount" className="text-blue-500 hover:text-blue-700">
+      <Link href="/createAccount" className="text-blue-500 hover:text-blue-700">
         Create Account
       </Link>
-      <Link href="/SavedStories" className="text-blue-500 hover:text-blue-700">
+      <Link href="/savedStories" className="text-blue-500 hover:text-blue-700">
         Saved Stories
       </Link>
     </main>
