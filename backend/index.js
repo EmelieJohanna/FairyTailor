@@ -52,6 +52,40 @@ app.post("/users", async (req, res) => {
   }
 });
 
+app.post("/sessions", async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    // Fetch user from the database
+    const result = await query("SELECT * FROM users WHERE username = ?", [
+      username,
+    ]);
+    const user = result[0];
+
+    if (!user) {
+      return res.status(401).send("Invalid username or password");
+    }
+
+    // Check if passwords match
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).send("Invalid username or password");
+    }
+
+    // Insert login info into the sessions table with user_id
+    const loginResult = await query(
+      "INSERT INTO sessions (user_id) VALUES (?)",
+      [user.id]
+    );
+
+    res.status(200).json({ message: "Login successful" });
+  } catch (error) {
+    console.error("Error during login", error);
+    res.status(500).send("Error during login");
+  }
+});
+
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
