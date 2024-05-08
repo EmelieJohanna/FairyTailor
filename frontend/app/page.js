@@ -23,10 +23,10 @@ export default function Home() {
           <span>Log in</span>
         </Link>
       </button>
-      <Link href="/CreateAccount" className="text-blue-500 hover:text-blue-700">
+      <Link href="/createAccount" className="text-blue-500 hover:text-blue-700">
         Create Account
       </Link>
-      <Link href="/SavedStories" className="text-blue-500 hover:text-blue-700">
+      <Link href="/savedStories" className="text-blue-500 hover:text-blue-700">
         Saved Stories
       </Link>
     </main>
