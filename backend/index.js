@@ -6,15 +6,16 @@ import cors from "cors";
 import mysql from "mysql2/promise";
 import bcrypt from "bcrypt";
 
-
 dotenv.config();
 
 const app = express();
-const PORT = 3009;
+const PORT = 3008;
 
 //middleware
 app.use(cors());
 app.use(bodyParser.json());
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const pool = mysql.createPool({
   host: "localhost",
@@ -52,24 +53,29 @@ app.post("/users", async (req, res) => {
   }
 });
 
+app.post("/storyTeller", async (req, res) => {
+  const storyType = req.body.storyType || "fairytale";
+  const storyHappening =
+    req.body.storyHappening || "a pricess who fell from a tree";
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  try {
+    const completion = await openai.chat.completions.create({
+      messages: [
+        {
+          role: "user",
+          content: `Tell me a ${storyType} story for children about ${storyHappening} that's interesting.`,
+        },
+      ],
+      model: "gpt-3.5-turbo",
+    });
 
-app.get("/joke", async (req, res) => {
-  const apiKey = process.env.OPENAI_API_KEY;
+    const result = completion.choices[0].message.content;
 
-  const completion = await openai.chat.completions.create({
-    messages: [
-      {
-        role: "user",
-        content: "Tell me a story",
-      },
-    ],
-    model: "gpt-3.5.turbo",
-  });
-  const result = completion.choices[0].message.content;
-
-  res.send(result);
+    res.json({ story: result });
+  } catch (error) {
+    console.error("Failed to generate story", error);
+    res.status(500).send("Failed to generate story");
+  }
 });
 
 app.listen(PORT, () => {
