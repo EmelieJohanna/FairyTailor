@@ -19,14 +19,14 @@ export default function Home() {
         </Link>
       </button>
       <button className="bg-teal-300 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-full mb-2 border-none">
-        <Link href="/login">
+        <Link href="/Login">
           <span>Log in</span>
         </Link>
       </button>
-      <Link href="/createAccount" className="text-blue-500 hover:text-blue-700">
+      <Link href="/CreateAccount" className="text-blue-500 hover:text-blue-700">
         Create Account
       </Link>
-      <Link href="/savedStories" className="text-blue-500 hover:text-blue-700">
+      <Link href="/SavedStories" className="text-blue-500 hover:text-blue-700">
         Saved Stories
       </Link>
     </main>
