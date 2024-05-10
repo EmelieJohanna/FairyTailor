@@ -19,7 +19,7 @@ export default function Home() {
         </Link>
       </button>
       <button className="bg-teal-300 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-full mb-2 border-none">
-        <Link href="/Login">
+        <Link href="/login">
           <span>Log in</span>
         </Link>
       </button>

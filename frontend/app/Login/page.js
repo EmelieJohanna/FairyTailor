@@ -10,7 +10,7 @@ export default function Loggain() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://localhost:3009/sessions", {
+      const response = await fetch("http://localhost:3008/sessions", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -39,7 +39,6 @@ export default function Loggain() {
 
   return (
     <div className="flex flex-col items-center">
-    
       <div className="flex flex-col bg-black justify-content items-center w-96 h-96 text-yellow-50 rounded">
         <p className="mt-8">Log in</p>
         <label htmlFor="username" className="mt-20">

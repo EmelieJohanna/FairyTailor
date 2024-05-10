@@ -10,7 +10,7 @@ export default function CreateAccount() {
 
   const handleCreateAccount = async () => {
     try {
-      const response = await fetch("http://localhost:3009/users", {
+      const response = await fetch("http://localhost:3008/users", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -23,7 +23,7 @@ export default function CreateAccount() {
 
       if (response.ok && password !== "" && username !== "") {
         alert("Grattis! Du har skapat ett konto i Arbetarbaken.");
-        router.push("/Login");
+        router.push("/login");
       } else {
         alert("Glöm inte att fylla i användarnamn och lösenord.");
       }
