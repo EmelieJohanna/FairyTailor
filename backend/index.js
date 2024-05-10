@@ -112,6 +112,20 @@ app.post("/storyTeller", async (req, res) => {
   }
 });
 
+app.post("/saveStory", async (req, res) => {
+  const { storyType, storyHappening, storyText } = req.body;
+  try {
+    const result = await query(
+      "INSERT INTO stories (story_type, story_happening, story_text ) VALUES (?, ?, ?)",
+      [storyType, storyHappening, storyText]
+    );
+    res.status(200).json({ message: "Story saved", storyId: result.insertId });
+  } catch (error) {
+    console.error("Error saving story", error);
+    res.status(500).json({ messege: "Error saving story" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log("Listening on port: " + PORT);
 });
