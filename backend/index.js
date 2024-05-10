@@ -90,7 +90,7 @@ app.post("/sessions", async (req, res) => {
 app.post("/storyTeller", async (req, res) => {
   const storyType = req.body.storyType || "fairytale";
   const storyHappening =
-    req.body.storyHappening || "a pricess who fell from a tree";
+    req.body.storyHappening || "a princess who fell from a tree";
 
   try {
     const completion = await openai.chat.completions.create({
