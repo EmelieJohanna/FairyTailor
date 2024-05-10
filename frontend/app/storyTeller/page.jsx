@@ -19,6 +19,17 @@ export default function StoryTeller() {
     setStory(data.story);
   };
 
+  const saveStory = async () => {
+    const response = await fetch("http://localhost:3008/saveStory", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ storyType, storyHappening, storyText: story }),
+    });
+    const data = await response.json();
+    console.log(data.message);
+  };
   return (
     <main
       className="flex min-h-screen flex-col items-center justify-center p-24"
@@ -40,7 +51,7 @@ export default function StoryTeller() {
         type="text"
         value={storyHappening}
         onChange={(e) => setStoryHappening(e.target.value)}
-        placeholder="Enter the main event of the story"
+        placeholder="What is the main event?"
         className="mb-4 p-2 rounded"
       />
       <button
@@ -48,6 +59,12 @@ export default function StoryTeller() {
         className="p-2 bg-blue-500 text-white rounded"
       >
         Tell Me a Story
+      </button>
+      <button
+        onClick={saveStory}
+        className="p-2 bg-blue-500 text-white rounded"
+      >
+        Save story
       </button>
       <div className="m-4 flex w-full max-w-md h-52 bg-teal-500 bg-opacity-50 rounded-lg p-4 overflow-auto">
         {story}
