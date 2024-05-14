@@ -111,6 +111,32 @@ app.post("/storyTeller", async (req, res) => {
   }
 });
 
+// function for generating image
+async function generateImageFromStory(description) {
+  try {
+    const imageResponse = await openai.createImage({
+      prompt: description,
+      n: 1,
+      size: "1024x1024",
+    });
+    return imageResponse.data.image_url;
+  } catch (error) {
+    console.error("Error generating image:", error);
+    throw error;
+  }
+}
+
+app.post("/generateImage", async (req, res) => {
+  const { storyHappening } = req.body;
+  try {
+    const image = await generateImageFromStory(storyHappening);
+    res.status(200).json({ imageUrl: image });
+  } catch (error) {
+    console.error("Failed to generate image", error);
+    res.status(500).send("Failed to generate image");
+  }
+});
+
 app.post("/saveStory", async (req, res) => {
   const { storyType, storyHappening, storyText } = req.body;
   try {
@@ -122,6 +148,18 @@ app.post("/saveStory", async (req, res) => {
   } catch (error) {
     console.error("Error saving story", error);
     res.status(500).json({ messege: "Error saving story" });
+  }
+});
+
+app.get("/allStories", async (req, res) => {
+  const sql = "SELECT * FROM stories";
+
+  try {
+    const stories = await query(sql);
+    res.json(stories);
+  } catch (error) {
+    console.error("Error fetching stories", error);
+    res.status(500).send("Failed to fetch stories");
   }
 });
 
