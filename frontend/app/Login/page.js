@@ -3,12 +3,16 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+
 export default function Loggain() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const router = useRouter();
 
   const handleLogin = async () => {
+   
+
     try {
       const response = await fetch("http://localhost:3008/sessions", {
         method: "POST",
@@ -32,6 +36,7 @@ export default function Loggain() {
       console.error("Något gick fel:", error);
       alert("Något gick fel vid inloggning.");
     } finally {
+      setIsLoggedIn(true);
       setPassword("");
       setUsername("");
     }

@@ -8,10 +8,12 @@ function SavedStories() {
   ];
 
   return (
-    <div className="bg-teal-600 min-h-screen">
-      <h1 className="text-white flex">My Fairy Tale Stories</h1>
-      <StoryCard stories={stories} />
-    </div>
+ 
+      <div className="bg-teal-600 min-h-screen">
+        <h1 className="text-white flex">My Fairy Tale Stories</h1>
+        <StoryCard stories={stories} />
+      </div>
+    
   );
 }
 
