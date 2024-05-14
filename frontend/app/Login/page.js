@@ -2,12 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Loggain() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const {isLoggedIn, setIsLoggedIn} = useAuth();
   const router = useRouter();
 
   const handleLogin = async () => {

@@ -1,9 +1,10 @@
 "use client"
 
 import Link from "next/link";
-
+import { useAuth } from "./contexts/AuthContext";
 
 export default function Home() {
+  const { isLoggedIn } = useAuth();
   return (
     <main
       className="flex min-h-screen flex-col items-center justify-center p-24"
@@ -29,9 +30,12 @@ export default function Home() {
       <Link href="/createAccount" className="text-blue-500 hover:text-blue-700">
         Create Account
       </Link>
-      <Link href="/savedStories" className="text-blue-500 hover:text-blue700">Saved stories</Link>
+      {/* <Link href="/savedStories" className="text-blue-500 hover:text-blue700">Saved stories</Link> */}
       {/* Conditional rendering for Saved Stories link */}
-      {/* {/* {isLoggedIn ? (
+     
+    
+  
+ {isLoggedIn ? (
         <Link
           href="/savedStories"
           className="text-blue-500 hover:text-blue-700"
@@ -39,8 +43,6 @@ export default function Home() {
           Saved Stories
         </Link>
       ) : (
-        <span className="text-blue-500 hover:text-blue-700">Saved Stories</span>
-      )} */}
-    </main>
-  );
-}
+        <button onClick={() => alert("You need to be logged in to access this page")} className="underline text-blue-500 hover:text-blue-700">Saved Stories</button>
+      )}
+</main>)};
