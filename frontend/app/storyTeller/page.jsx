@@ -6,6 +6,7 @@ export default function StoryTeller() {
   const [storyType, setStoryType] = useState("");
   const [storyHappening, setStoryHappening] = useState("");
   const [story, setStory] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const fetchStory = async () => {
     const response = await fetch("http://localhost:3008/storyTeller", {
@@ -17,6 +18,20 @@ export default function StoryTeller() {
     });
     const data = await response.json();
     setStory(data.story);
+    fetchImage();
+  };
+
+  // Not finished
+  const fetchImage = async () => {
+    const response = await fetch("http://localhost:3008/generateImage", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ storyHappening }),
+    });
+    const data = await response.json();
+    setImageUrl(data.imageUrl);
   };
 
   const saveStory = async () => {
@@ -30,6 +45,7 @@ export default function StoryTeller() {
     const data = await response.json();
     console.log(data.message);
   };
+
   return (
     <main
       className="flex min-h-screen flex-col items-center justify-center p-24"
@@ -69,6 +85,18 @@ export default function StoryTeller() {
       <div className="m-4 flex w-full max-w-md h-52 bg-teal-500 bg-opacity-50 rounded-lg p-4 overflow-auto">
         {story}
       </div>
+      {/* <div className=" bg-white h-56 w-80">
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            width={100}
+            height={100}
+            alt="Story Image"
+            className="mt-6 max-h-40 rounded"
+          />
+        )}
+      </div>
+      <button onClick={fetchImage}>Create image</button> */}
     </main>
   );
 }
