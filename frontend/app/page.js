@@ -1,4 +1,7 @@
+"use client"
+
 import Link from "next/link";
+
 
 export default function Home() {
   return (
@@ -26,9 +29,18 @@ export default function Home() {
       <Link href="/createAccount" className="text-blue-500 hover:text-blue-700">
         Create Account
       </Link>
-      <Link href="/savedStories" className="text-blue-500 hover:text-blue-700">
-        Saved Stories
-      </Link>
+      <Link href="/savedStories" className="text-blue-500 hover:text-blue700">Saved stories</Link>
+      {/* Conditional rendering for Saved Stories link */}
+      {/* {/* {isLoggedIn ? (
+        <Link
+          href="/savedStories"
+          className="text-blue-500 hover:text-blue-700"
+        >
+          Saved Stories
+        </Link>
+      ) : (
+        <span className="text-blue-500 hover:text-blue-700">Saved Stories</span>
+      )} */}
     </main>
   );
 }
