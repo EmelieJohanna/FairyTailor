@@ -47,16 +47,17 @@ function SavedStories() {
   return (
     <div className="bg-teal-600 min-h-screen">
       <h1 className="text-white flex">My Fairy Tale Stories</h1>
-
-      {loading ? (
-        <p>Loading stories...</p>
-      ) : error ? (
-        <p>Error: {error}</p>
-      ) : stories.length > 0 ? (
-        stories.map((story) => <StoryCard key={story.id} story={story} />)
-      ) : (
-        <p>No stories found.</p>
-      )}
+      <div className="flex gap-2 flex-wrap">
+        {loading ? (
+          <p>Loading stories...</p>
+        ) : error ? (
+          <p>Error: {error}</p>
+        ) : stories.length > 0 ? (
+          stories.map((story) => <StoryCard key={story.id} story={story} />)
+        ) : (
+          <p>No stories found.</p>
+        )}
+      </div>
     </div>
   );
 }
