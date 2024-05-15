@@ -43,6 +43,6 @@ export default function Home() {
           Saved Stories
         </Link>
       ) : (
-        <button onClick={() => alert("You need to be logged in to access this page")} className="underline text-blue-500 hover:text-blue-700">Saved Stories</button>
+        <button onClick={() => alert("You need to be logged in to access this page.")} className="underline text-blue-500 hover:text-blue-700">Saved Stories</button>
       )}
 </main>)};
