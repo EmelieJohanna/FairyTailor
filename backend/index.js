@@ -104,11 +104,9 @@ app.post("/sessions", async (req, res) => {
 //   try {
 //     console.log("User ID from request:", user_id);
 
-    
 //       const sessionsCheck = await query(
 //         "SELECT * FROM sessions WHERE user_id = ?",
 //         [user_id]);
-    
 
 //       if (sessionsCheck.length > 0) {
 //         // User details found
@@ -120,13 +118,12 @@ app.post("/sessions", async (req, res) => {
 //         // User not found in the database
 //         res.json({ loggedIn: false });
 //       }
-  
+
 //   } catch (error) {
 //     console.error("Error checking login status:", error);
 //     res.status(500).send("Error checking login status");
 //   }
 // });
-
 
 app.post("/storyTeller", async (req, res) => {
   const storyType = req.body.storyType || "fairytale";
@@ -168,6 +165,25 @@ async function generateImageFromStory(description) {
   }
 }
 
+// v.2
+app.post("/generateImage2", async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    const response = await openai.images.generate({
+      model: "dall-e-3",
+      prompt: prompt,
+      n: 1,
+      size: "1024x1024",
+    });
+    const image_url = response.data[0].url;
+    res.json({ image_url });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to generate image" });
+  }
+});
+
+// v.1
 app.post("/generateImage", async (req, res) => {
   const { storyHappening } = req.body;
   try {

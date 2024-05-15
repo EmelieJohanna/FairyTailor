@@ -1,41 +1,54 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { useAuth } from "./contexts/AuthContext";
+import Button from "./components/Button";
+import Image from "next/image";
+import storyBear from "/public/storyBear.png";
 
 export default function Home() {
   const { isLoggedIn } = useAuth();
   return (
-    <main
-      className="flex min-h-screen flex-col items-center justify-center p-24"
-      style={{
-        backgroundImage: "url('/front.webp')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <h1 className="text-4xl font-bold mb-2 text-white">FairyTailor</h1>
+    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+      <Image className="w-[300px] md:w-[400px] h-auto" src={storyBear}></Image>
+      {/* <h1 className="text-4xl font-bold mb-2 text-white">TestTailor</h1> */}
+      <svg height="100" width="400">
+        <defs>
+          <style>
+            @import
+            url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
+          </style>
+        </defs>
+        <text
+          x="40"
+          y="60"
+          fill="white"
+          stroke="#7dd1b9"
+          font-size="72"
+          font-family="Poetsen One"
+          font-weight="bold"
+        >
+          FairyTailor
+        </text>
+      </svg>
       <p className="mb-10 text-lg text-white">This is a storytelling app</p>
-      <button className="bg-yellow-300 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded-full mb-4 border-none">
-        <Link href="/storyTeller">
+      <Button>
+        <Link className="no-underline text-[#9d3b19]" href="/storyTeller">
           <span>Start a Story</span>
         </Link>
-      </button>
-      <button className="bg-teal-300 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-full mb-2 border-none">
-        <Link href="/login">
+      </Button>
+      <Button>
+        <Link className="no-underline text-[#9d3b19]" href="/login">
           <span>Log in</span>
         </Link>
-      </button>
+      </Button>
       <Link href="/createAccount" className="text-blue-500 hover:text-blue-700">
         Create Account
       </Link>
       {/* <Link href="/savedStories" className="text-blue-500 hover:text-blue700">Saved stories</Link> */}
       {/* Conditional rendering for Saved Stories link */}
-     
-    
-  
- {isLoggedIn ? (
+
+      {isLoggedIn ? (
         <Link
           href="/savedStories"
           className="text-blue-500 hover:text-blue-700"
@@ -43,6 +56,17 @@ export default function Home() {
           Saved Stories
         </Link>
       ) : (
+<<<<<<< HEAD
         <button onClick={() => alert("You need to be logged in to access this page.")} className="underline text-blue-500 hover:text-blue-700">Saved Stories</button>
+=======
+        <button
+          onClick={() => alert("You need to be logged in to access this page")}
+          className="underline text-blue-500 hover:text-blue-700"
+        >
+          Saved Stories
+        </button>
+>>>>>>> 46007ad50804712cf9aac284c618dd5d0f4d1688
       )}
-</main>)};
+    </main>
+  );
+}
