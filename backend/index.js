@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mysql from "mysql2/promise";
 import bcrypt from "bcryptjs";
+import session from "express-session";
+
 dotenv.config();
 
 const app = express();
@@ -28,6 +30,13 @@ const pool = mysql.createPool({
 async function query(sql, params) {
   const [results] = await pool.execute(sql, params);
   return results;
+}
+
+// Generera engångslösenord
+function generateOTP() {
+  // Generera en sexsiffrig numerisk OTP
+  const token = Math.floor(100000 + Math.random() * 900000);
+  return token.toString();
 }
 
 app.post("/users", async (req, res) => {
@@ -73,10 +82,13 @@ app.post("/sessions", async (req, res) => {
       return res.status(401).send("Invalid username or password");
     }
 
+    // Generate OTP/token
+    const token = generateOTP();
+
     // Insert login info into the sessions table with user_id
     const loginResult = await query(
-      "INSERT INTO sessions (user_id) VALUES (?)",
-      [user.id]
+      "INSERT INTO sessions (user_id, token) VALUES (?, ?)",
+      [user.id, token]
     );
 
     res.status(200).json({ message: "Login successful", user_id: user.id });

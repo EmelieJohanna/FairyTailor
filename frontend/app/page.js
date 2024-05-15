@@ -12,7 +12,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
       <Image className="w-[300px] md:w-[400px] h-auto" src={storyBear}></Image>
       {/* <h1 className="text-4xl font-bold mb-2 text-white">TestTailor</h1> */}
-      <svg height="100" width="400">
+      <svg height="100" width="440">
         <defs>
           <style>
             @import
@@ -20,7 +20,7 @@ export default function Home() {
           </style>
         </defs>
         <text
-          x="40"
+          x="50"
           y="60"
           fill="white"
           stroke="#7dd1b9"
@@ -31,7 +31,7 @@ export default function Home() {
           FairyTailor
         </text>
       </svg>
-      <p className="mb-10 text-lg text-white">This is a storytelling app</p>
+      <p className="mb-10 text-xl text-[#abe3d5]">This is a storytelling app</p>
       <Button>
         <Link className="no-underline text-[#9d3b19]" href="/storyTeller">
           <span>Start a Story</span>
@@ -56,12 +56,16 @@ export default function Home() {
           Saved Stories
         </Link>
       ) : (
+<<<<<<< HEAD
+        <button onClick={() => alert("You need to be logged in to access this page.")} className="underline text-blue-500 hover:text-blue-700">Saved Stories</button>
+=======
         <button
           onClick={() => alert("You need to be logged in to access this page")}
           className="underline text-blue-500 hover:text-blue-700"
         >
           Saved Stories
         </button>
+>>>>>>> 46007ad50804712cf9aac284c618dd5d0f4d1688
       )}
     </main>
   );
