@@ -1,14 +1,22 @@
 "use client";
 
 import { useState } from "react";
+<<<<<<< HEAD
+import { useAuth } from "../contexts/AuthContext";
+=======
 import axios from "axios";
+>>>>>>> 46007ad50804712cf9aac284c618dd5d0f4d1688
 
 export default function StoryTeller() {
   const [storyType, setStoryType] = useState("");
   const [storyHappening, setStoryHappening] = useState("");
   const [story, setStory] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+<<<<<<< HEAD
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
+=======
   const [prompt, setPrompt] = useState("");
+>>>>>>> 46007ad50804712cf9aac284c618dd5d0f4d1688
 
   const fetchStory = async () => {
     const response = await fetch("http://localhost:3008/storyTeller", {
@@ -94,12 +102,18 @@ export default function StoryTeller() {
       >
         Tell Me a Story
       </button>
-      <button
-        onClick={saveStory}
-        className="p-2 bg-blue-500 text-white rounded"
-      >
-        Save story
-      </button>
+      {isLoggedIn ? (
+        <button
+          onClick={saveStory}
+          className="p-2 bg-blue-500 text-white rounded"
+        >
+          Save story
+        </button>
+      ) : (
+        <button onClick={() => alert("You need to be logged in to save your story.")} className="p-2 bg-blue-500 text-white rounded">
+          Save story
+        </button>
+      )}
       <div className="m-4 flex w-full max-w-md h-52 bg-teal-500 bg-opacity-50 rounded-lg p-4 overflow-auto">
         {story}
       </div>
