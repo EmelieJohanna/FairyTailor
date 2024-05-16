@@ -9,11 +9,13 @@ export default function StoryOutput() {
 
   // Save story function
   const saveStory = async () => {
+    const token = localStorage.getItem("sessionId");
     try {
       const response = await fetch("http://localhost:3008/saveStory", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ storyType, storyHappening, storyText: story }),
       });
