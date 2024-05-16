@@ -1,22 +1,16 @@
 "use client";
 
 import { useState } from "react";
-<<<<<<< HEAD
 import { useAuth } from "../contexts/AuthContext";
-=======
 import axios from "axios";
->>>>>>> 46007ad50804712cf9aac284c618dd5d0f4d1688
 
 export default function StoryTeller() {
   const [storyType, setStoryType] = useState("");
   const [storyHappening, setStoryHappening] = useState("");
   const [story, setStory] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-<<<<<<< HEAD
   const { isLoggedIn, setIsLoggedIn } = useAuth();
-=======
   const [prompt, setPrompt] = useState("");
->>>>>>> 46007ad50804712cf9aac284c618dd5d0f4d1688
 
   const fetchStory = async () => {
     const response = await fetch("http://localhost:3008/storyTeller", {
@@ -61,16 +55,27 @@ export default function StoryTeller() {
   };
 
   const saveStory = async () => {
-    const response = await fetch("http://localhost:3008/saveStory", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ storyType, storyHappening, storyText: story }),
-    });
-    const data = await response.json();
-    console.log(data.message);
+    // Get the token from localStorage or wherever it's stored
+    const token = localStorage.getItem("sessionId");
+
+    try {
+      const response = await fetch("http://localhost:3008/saveStory", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Include the Authorization header with the token
+        },
+        body: JSON.stringify({ storyType, storyHappening, storyText: story }),
+      });
+
+      const data = await response.json();
+      console.log(data.message);
+    } catch (error) {
+      console.error("Error saving story:", error);
+      // Handle error as needed
+    }
   };
+
 
   return (
     <main

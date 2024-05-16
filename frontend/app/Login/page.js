@@ -14,6 +14,7 @@ export default function Loggain() {
    
 
     try {
+      console.log("Received login request for username:", username);
       const response = await fetch("http://localhost:3008/sessions", {
         method: "POST",
         headers: {
@@ -27,6 +28,10 @@ export default function Loggain() {
 
       if (response.ok) {
         const data = await response.json();
+        console.log("Login response data:", data);
+         localStorage.setItem("sessionId", data.token);
+
+         const sessionId = localStorage.getItem("sessionId");
 
         router.push("/");
       } else {
