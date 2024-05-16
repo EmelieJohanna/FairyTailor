@@ -1,0 +1,23 @@
+/* components/Stars.module.css */
+.star {
+  position: absolute;
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.starsContainer {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  padding: 20px;
+}
