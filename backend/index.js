@@ -150,23 +150,7 @@ app.post("/storyTeller", async (req, res) => {
   }
 });
 
-// function for generating image
-async function generateImageFromStory(description) {
-  try {
-    const imageResponse = await openai.createImage({
-      prompt: description,
-      n: 1,
-      size: "1024x1024",
-    });
-    return imageResponse.data.image_url;
-  } catch (error) {
-    console.error("Error generating image:", error);
-    throw error;
-  }
-}
-
-// v.2
-app.post("/generateImage2", async (req, res) => {
+app.post("/generateImage", async (req, res) => {
   try {
     const { prompt } = req.body;
     const response = await openai.images.generate({
@@ -184,7 +168,7 @@ app.post("/generateImage2", async (req, res) => {
 });
 
 // v.1
-app.post("/generateImage", async (req, res) => {
+app.post("/generateImage2", async (req, res) => {
   const { storyHappening } = req.body;
   try {
     const image = await generateImageFromStory(storyHappening);

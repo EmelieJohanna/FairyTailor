@@ -56,16 +56,12 @@ export default function Home() {
           Saved Stories
         </Link>
       ) : (
-<<<<<<< HEAD
-        <button onClick={() => alert("You need to be logged in to access this page.")} className="underline text-blue-500 hover:text-blue-700">Saved Stories</button>
-=======
         <button
-          onClick={() => alert("You need to be logged in to access this page")}
+          onClick={() => alert("You need to be logged in to access this page.")}
           className="underline text-blue-500 hover:text-blue-700"
         >
           Saved Stories
         </button>
->>>>>>> 46007ad50804712cf9aac284c618dd5d0f4d1688
       )}
     </main>
   );
