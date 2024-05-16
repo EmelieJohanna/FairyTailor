@@ -5,7 +5,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mysql from "mysql2/promise";
 import bcrypt from "bcryptjs";
-import session from "express-session";
 
 dotenv.config();
 
@@ -65,38 +64,50 @@ app.post("/sessions", async (req, res) => {
   const { username, password } = req.body;
 
   try {
+   
+
     // Fetch user from the database
     const result = await query("SELECT * FROM users WHERE username = ?", [
       username,
     ]);
+  
+
     const user = result[0];
 
     if (!user) {
+      
       return res.status(401).send("Invalid username or password");
     }
 
     // Check if passwords match
     const passwordMatch = await bcrypt.compare(password, user.password);
+    
 
     if (!passwordMatch) {
+   
       return res.status(401).send("Invalid username or password");
     }
 
     // Generate OTP/token
     const token = generateOTP();
+   
 
-    // Insert login info into the sessions table with user_id
+    // Insert login info into the sessions table with user_id and token
     const loginResult = await query(
       "INSERT INTO sessions (user_id, token) VALUES (?, ?)",
       [user.id, token]
     );
+    
 
-    res.status(200).json({ message: "Login successful", user_id: user.id });
+    
+
+    res.status(200).json({ message: "Login successful", token });
   } catch (error) {
     console.error("Error during login", error);
     res.status(500).send("Error during login");
   }
 });
+
 
 // app.get("/sessions/check", async (req, res) => {
 //   const { user_id } = req.body;
@@ -179,31 +190,57 @@ app.post("/generateImage2", async (req, res) => {
   }
 });
 
+// Save Story Endpoint
 app.post("/saveStory", async (req, res) => {
   const { storyType, storyHappening, storyText } = req.body;
+  const token = req.headers.authorization.split(" ")[1]; // Extract token from Authorization header
+
   try {
+    // Validate token and get user ID
+    const session = await query("SELECT * FROM sessions WHERE token = ?", [token]);
+    if (!session || session.length === 0) {
+      return res.status(401).send("Invalid session token");
+    }
+
+    const user_id = session[0].user_id;
+
+    // Save story with user_id
     const result = await query(
-      "INSERT INTO stories (story_type, story_happening, story_text ) VALUES (?, ?, ?)",
-      [storyType, storyHappening, storyText]
+      "INSERT INTO stories (story_type, story_happening, story_text, user_id) VALUES (?, ?, ?, ?)",
+      [storyType, storyHappening, storyText, user_id]
     );
+
     res.status(200).json({ message: "Story saved", storyId: result.insertId });
   } catch (error) {
     console.error("Error saving story", error);
-    res.status(500).json({ messege: "Error saving story" });
+    res.status(500).json({ message: "Error saving story" });
   }
 });
 
-app.get("/allStories", async (req, res) => {
-  const sql = "SELECT * FROM stories";
+// Fetch User Stories Endpoint
+app.get("/userStories", async (req, res) => {
+  const token = req.headers.authorization.split(" ")[1]; // Extract token from Authorization header
 
   try {
-    const stories = await query(sql);
+    // Validate token and get user ID
+    const session = await query("SELECT * FROM sessions WHERE token = ?", [token]);
+    if (!session || session.length === 0) {
+      return res.status(401).send("Invalid session token");
+    }
+
+    const user_id = session[0].user_id;
+
+    // Fetch stories for user_id
+    const sql = "SELECT * FROM stories WHERE user_id = ?";
+    const stories = await query(sql, [user_id]);
+
     res.json(stories);
   } catch (error) {
-    console.error("Error fetching stories", error);
-    res.status(500).send("Failed to fetch stories");
+    console.error("Error fetching user stories", error);
+    res.status(500).send("Failed to fetch user stories");
   }
 });
+
 
 app.listen(PORT, () => {
   console.log("Listening on port: " + PORT);

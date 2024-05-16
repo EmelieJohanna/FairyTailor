@@ -7,6 +7,7 @@ import StoryOutput from "../components/StoryOutput";
 export default function StoryTeller() {
   const { isStoryFetched } = useStory();
 
+
   return (
     <>
       <main>{!isStoryFetched ? <StoryInput /> : <StoryOutput />}</main>
