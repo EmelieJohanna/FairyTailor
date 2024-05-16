@@ -1,9 +1,18 @@
 "use client";
 
 import { AuthProvider } from "./contexts/AuthContext";
+import { StoryProvider } from "./contexts/StoryContext";
 
 export function App({ children }) {
-  return <AuthProvider><div className="max-w-[1200px] flex-col m-auto mb-10">{children}</div></AuthProvider>;
+  return (
+    <AuthProvider>
+      <StoryProvider>
+        <div className="min-h-screen bg-[#ddffe6] m-0 flex flex-col justify-center items-center">
+          {children}
+        </div>
+      </StoryProvider>
+    </AuthProvider>
+  );
 }
 
 export default ({ children }) => <App>{children}</App>;
