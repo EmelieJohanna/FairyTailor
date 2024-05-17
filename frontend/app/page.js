@@ -10,7 +10,12 @@ export default function Home() {
   const { isLoggedIn } = useAuth();
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <Image className="w-[300px] md:w-[400px] h-auto" src={storyBear}></Image>
+      <Image
+        className="w-[300px] md:w-[400px] h-auto"
+        src={storyBear}
+        alt="Cute bear cartoon"
+        priority
+      ></Image>
       {/* <h1 className="text-4xl font-bold mb-2 text-white">TestTailor</h1> */}
       <svg height="100" width="440">
         <defs>
@@ -24,9 +29,9 @@ export default function Home() {
           y="60"
           fill="white"
           stroke="#7dd1b9"
-          font-size="72"
-          font-family="Poetsen One"
-          font-weight="bold"
+          fontSize="72"
+          fontFamily="Poetsen One"
+          fontWeight="bold"
         >
           FairyTailor
         </text>
