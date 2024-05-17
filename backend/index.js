@@ -64,42 +64,32 @@ app.post("/sessions", async (req, res) => {
   const { username, password } = req.body;
 
   try {
-   
-
     // Fetch user from the database
     const result = await query("SELECT * FROM users WHERE username = ?", [
       username,
     ]);
-  
 
     const user = result[0];
 
     if (!user) {
-      
       return res.status(401).send("Invalid username or password");
     }
 
     // Check if passwords match
     const passwordMatch = await bcrypt.compare(password, user.password);
-    
 
     if (!passwordMatch) {
-   
       return res.status(401).send("Invalid username or password");
     }
 
     // Generate OTP/token
     const token = generateOTP();
-   
 
     // Insert login info into the sessions table with user_id and token
     const loginResult = await query(
       "INSERT INTO sessions (user_id, token) VALUES (?, ?)",
       [user.id, token]
     );
-    
-
-    
 
     res.status(200).json({ message: "Login successful", token });
   } catch (error) {
@@ -107,7 +97,6 @@ app.post("/sessions", async (req, res) => {
     res.status(500).send("Error during login");
   }
 });
-
 
 // app.get("/sessions/check", async (req, res) => {
 //   const { user_id } = req.body;
@@ -178,18 +167,6 @@ app.post("/generateImage", async (req, res) => {
   }
 });
 
-// v.1
-app.post("/generateImage2", async (req, res) => {
-  const { storyHappening } = req.body;
-  try {
-    const image = await generateImageFromStory(storyHappening);
-    res.status(200).json({ imageUrl: image });
-  } catch (error) {
-    console.error("Failed to generate image", error);
-    res.status(500).send("Failed to generate image");
-  }
-});
-
 // Save Story Endpoint
 app.post("/saveStory", async (req, res) => {
   const { storyType, storyHappening, storyText } = req.body;
@@ -197,7 +174,9 @@ app.post("/saveStory", async (req, res) => {
 
   try {
     // Validate token and get user ID
-    const session = await query("SELECT * FROM sessions WHERE token = ?", [token]);
+    const session = await query("SELECT * FROM sessions WHERE token = ?", [
+      token,
+    ]);
     if (!session || session.length === 0) {
       return res.status(401).send("Invalid session token");
     }
@@ -223,7 +202,9 @@ app.get("/userStories", async (req, res) => {
 
   try {
     // Validate token and get user ID
-    const session = await query("SELECT * FROM sessions WHERE token = ?", [token]);
+    const session = await query("SELECT * FROM sessions WHERE token = ?", [
+      token,
+    ]);
     if (!session || session.length === 0) {
       return res.status(401).send("Invalid session token");
     }
@@ -240,7 +221,6 @@ app.get("/userStories", async (req, res) => {
     res.status(500).send("Failed to fetch user stories");
   }
 });
-
 
 app.listen(PORT, () => {
   console.log("Listening on port: " + PORT);
