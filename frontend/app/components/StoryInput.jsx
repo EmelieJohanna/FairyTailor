@@ -5,11 +5,14 @@ import { useStory } from "../contexts/StoryContext";
 import StarsLoader from "./StarsLoader";
 
 export default function StoryInput() {
-  const [storyType, setStoryType] = useState("");
-  const [storyHappening, setStoryHappening] = useState("");
+  const {
+    storyType,
+    setStoryType,
+    storyHappening,
+    setStoryHappening,
+    handleStorySubmit,
+  } = useStory();
   const [isLoading, setIsLoading] = useState(false);
-
-  const { handleStorySubmit } = useStory();
 
   const fetchStory = async () => {
     try {
