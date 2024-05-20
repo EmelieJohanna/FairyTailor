@@ -5,6 +5,14 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mysql from "mysql2/promise";
 import bcrypt from "bcryptjs";
+import axios from "axios";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 dotenv.config();
 
@@ -14,6 +22,8 @@ const PORT = 3008;
 //middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -98,32 +108,6 @@ app.post("/sessions", async (req, res) => {
   }
 });
 
-// app.get("/sessions/check", async (req, res) => {
-//   const { user_id } = req.body;
-
-//   try {
-//     console.log("User ID from request:", user_id);
-
-//       const sessionsCheck = await query(
-//         "SELECT * FROM sessions WHERE user_id = ?",
-//         [user_id]);
-
-//       if (sessionsCheck.length > 0) {
-//         // User details found
-//         const user = sessionsCheck[0];
-//         console.log("User details:", user); // Log user details
-
-//         res.json({ loggedIn: true });
-//       } else {
-//         // User not found in the database
-//         res.json({ loggedIn: false });
-//       }
-
-//   } catch (error) {
-//     console.error("Error checking login status:", error);
-//     res.status(500).send("Error checking login status");
-//   }
-// });
 
 app.post("/storyTeller", async (req, res) => {
   const storyType = req.body.storyType || "fairytale";
@@ -167,9 +151,8 @@ app.post("/generateImage", async (req, res) => {
   }
 });
 
-// Save Story Endpoint
 app.post("/saveStory", async (req, res) => {
-  const { storyType, storyHappening, storyText } = req.body;
+  const { storyType, storyHappening, storyText, image_url } = req.body;
   const token = req.headers.authorization.split(" ")[1]; // Extract token from Authorization header
 
   try {
@@ -183,10 +166,26 @@ app.post("/saveStory", async (req, res) => {
 
     const user_id = session[0].user_id;
 
-    // Save story with user_id
+    // Download the image and save it to the server
+    const imagePath = path.join(__dirname, "uploads", `${Date.now()}.jpg`);
+    const response = await axios({
+      url: image_url,
+      method: "GET",
+      responseType: "stream",
+    });
+
+    const writer = fs.createWriteStream(imagePath);
+    response.data.pipe(writer);
+
+    await new Promise((resolve, reject) => {
+      writer.on("finish", resolve);
+      writer.on("error", reject);
+    });
+
+    // Save story with user_id and image path
     const result = await query(
-      "INSERT INTO stories (story_type, story_happening, story_text, user_id) VALUES (?, ?, ?, ?)",
-      [storyType, storyHappening, storyText, user_id]
+      "INSERT INTO stories (story_type, story_happening, story_text, image_url, user_id) VALUES (?, ?, ?, ?, ?)",
+      [storyType, storyHappening, storyText, imagePath, user_id]
     );
 
     res.status(200).json({ message: "Story saved", storyId: result.insertId });
@@ -197,7 +196,7 @@ app.post("/saveStory", async (req, res) => {
 });
 
 // Fetch User Stories Endpoint
-app.get("/userStories", async (req, res) => {
+app.get("/getSavedStories", async (req, res) => {
   const token = req.headers.authorization.split(" ")[1]; // Extract token from Authorization header
 
   try {
