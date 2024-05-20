@@ -222,6 +222,34 @@ app.get("/userStories", async (req, res) => {
   }
 });
 
+app.delete("/userStories/:id", async (req, res) => {
+  const { id } = req.params;
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res.status(403).send("Authorization token required");
+  }
+  try {
+    const session = await query("SELECT * FROM sessions WHERE token=?", [
+      token,
+    ]);
+    if (session.length === 0) {
+      return res.status(401).send("Invalid or expired session token");
+    }
+
+    const story = await query("SELECT user_id * FROM stories WHERE user_id=?", [
+      id,
+    ]);
+    if (story.length === 0) {
+      return res.status(404).send("Story not found");
+    }
+    await query("DELETE FROM storis WHERE id=?", [id]);
+    res.send("Story deleted successfully");
+  } catch (error) {
+    console.error("Error deleting story", error);
+  }
+});
+
 app.listen(PORT, () => {
   console.log("Listening on port: " + PORT);
 });
