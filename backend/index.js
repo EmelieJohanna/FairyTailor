@@ -167,7 +167,8 @@ app.post("/saveStory", async (req, res) => {
     const user_id = session[0].user_id;
 
     // Download the image and save it to the server
-    const imagePath = path.join(__dirname, "uploads", `${Date.now()}.jpg`);
+    const imageFilename = `${Date.now()}.jpg`;
+    const imagePath = path.join(__dirname, "uploads", imageFilename);
     const response = await axios({
       url: image_url,
       method: "GET",
@@ -182,10 +183,11 @@ app.post("/saveStory", async (req, res) => {
       writer.on("error", reject);
     });
 
-    // Save story with user_id and image path
+    // Save story with user_id and relative image path
+    const relativeImagePath = `uploads/${imageFilename}`;
     const result = await query(
       "INSERT INTO stories (story_type, story_happening, story_text, image_url, user_id) VALUES (?, ?, ?, ?, ?)",
-      [storyType, storyHappening, storyText, imagePath, user_id]
+      [storyType, storyHappening, storyText, relativeImagePath, user_id]
     );
 
     res.status(200).json({ message: "Story saved", storyId: result.insertId });
@@ -195,15 +197,12 @@ app.post("/saveStory", async (req, res) => {
   }
 });
 
-// Fetch User Stories Endpoint
 app.get("/getSavedStories", async (req, res) => {
   const token = req.headers.authorization.split(" ")[1]; // Extract token from Authorization header
 
   try {
     // Validate token and get user ID
-    const session = await query("SELECT * FROM sessions WHERE token = ?", [
-      token,
-    ]);
+    const session = await query("SELECT * FROM sessions WHERE token = ?", [token]);
     if (!session || session.length === 0) {
       return res.status(401).send("Invalid session token");
     }
@@ -214,7 +213,15 @@ app.get("/getSavedStories", async (req, res) => {
     const sql = "SELECT * FROM stories WHERE user_id = ?";
     const stories = await query(sql, [user_id]);
 
-    res.json(stories);
+    // Modify imageUrl to include the full URL path
+    const updatedStories = stories.map(story => {
+      if (story.image_url) {
+        story.image_url = `http://localhost:3008/${story.image_url}`;
+      }
+      return story;
+    });
+
+    res.json(updatedStories);
   } catch (error) {
     console.error("Error fetching user stories", error);
     res.status(500).send("Failed to fetch user stories");
