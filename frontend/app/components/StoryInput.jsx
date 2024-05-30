@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useStory } from "../contexts/StoryContext";
 import StarsLoader from "./StarsLoader";
+import "../globals.css";
 
 export default function StoryInput() {
   const {
@@ -47,27 +48,41 @@ export default function StoryInput() {
       {isLoading ? (
         <StarsLoader count={8} />
       ) : (
-        <div>
-          <input
-            type="text"
-            value={storyType}
-            onChange={(e) => setStoryType(e.target.value)}
-            placeholder="Enter a story type"
-            className="mb-2 p-2 rounded"
-          />
-          <input
-            type="text"
-            value={storyHappening}
-            onChange={(e) => setStoryHappening(e.target.value)}
-            placeholder="What is the main event?"
-            className="mb-4 p-2 rounded"
-          />
-          <button
-            onClick={fetchStory}
-            className="p-2 bg-blue-500 text-white rounded"
-          >
-            Tell Me a Story
-          </button>
+        <div
+          className=" text-center flex flex-col h-[600px] justify-between"
+          style={{
+            backgroundImage: "url('/bg_hearts.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="flex flex-col">
+            <h2 className="mb-8 text-[#2f856b] text-2xl font-bold">
+              Generate a Story
+            </h2>
+            <input
+              type="text"
+              value={storyType}
+              onChange={(e) => setStoryType(e.target.value)}
+              placeholder="Enter a story type"
+              className="p-2 mb-4 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
+            />
+            <input
+              type="text"
+              value={storyHappening}
+              onChange={(e) => setStoryHappening(e.target.value)}
+              placeholder="What is the main event?"
+              className="p-2 mb-4 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
+            />
+          </div>
+          <div>
+            <button
+              onClick={fetchStory}
+              className="p-3 bg-[#9bf2d9] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
+            >
+              Tell Me a Story
+            </button>
+          </div>
         </div>
       )}
     </div>

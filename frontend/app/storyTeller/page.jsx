@@ -7,10 +7,11 @@ import StoryOutput from "../components/StoryOutput";
 export default function StoryTeller() {
   const { isStoryFetched } = useStory();
 
-
   return (
     <>
-      <main>{!isStoryFetched ? <StoryInput /> : <StoryOutput />}</main>
+      <main className="flex min-h-screen flex-col items-center justify-center p-24">
+        {!isStoryFetched ? <StoryInput /> : <StoryOutput />}
+      </main>
     </>
   );
 }

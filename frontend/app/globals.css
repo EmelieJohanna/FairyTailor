@@ -5,3 +5,9 @@
   margin: 0;
   padding: 0;
 }
+
+.bg-hearts {
+  background-image: url("/frontend/public/bg_hearts.png");
+  background-size: cover;
+  background-position: center;
+}

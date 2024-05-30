@@ -4,19 +4,12 @@ import Link from "next/link";
 import { useAuth } from "./contexts/AuthContext";
 import Button from "./components/Button";
 import Image from "next/image";
-import storyBear from "/public/storyBear.png";
+import storyBear from "/public/storyBear_transparent.png";
 
 export default function Home() {
   const { isLoggedIn } = useAuth();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <Image
-        className="w-[300px] md:w-[400px] h-auto"
-        src={storyBear}
-        alt="Cute bear cartoon"
-        priority
-      ></Image>
-      {/* <h1 className="text-4xl font-bold mb-2 text-white">TestTailor</h1> */}
+    <main className="flex flex-col items-center justify-center p-24">
       <svg height="100" width="440">
         <defs>
           <style>
@@ -28,7 +21,7 @@ export default function Home() {
           x="50"
           y="60"
           fill="white"
-          stroke="#7dd1b9"
+          stroke="#2f856b"
           fontSize="72"
           fontFamily="Poetsen One"
           fontWeight="bold"
@@ -36,18 +29,32 @@ export default function Home() {
           FairyTailor
         </text>
       </svg>
-      <p className="mb-10 text-xl text-[#abe3d5]">This is a storytelling app</p>
-      <Button>
-        <Link className="no-underline text-[#9d3b19]" href="/storyTeller">
-          <span>Start a Story</span>
-        </Link>
-      </Button>
-      <Button>
-        <Link className="no-underline text-[#9d3b19]" href="/login">
-          <span>Log in</span>
-        </Link>
-      </Button>
-      <Link href="/createAccount" className="text-blue-500 hover:text-blue-700">
+      <p className="mb-10 text-xl text-[#5bba9d]">Create your own stories</p>
+
+      <Image
+        className="w-[300px] md:w-[300] h-auto mb-10"
+        src={storyBear}
+        alt="Cute bear cartoon"
+        priority
+      ></Image>
+      {/* <h1 className="text-4xl font-bold mb-2 text-white">TestTailor</h1> */}
+
+      <div className="flex flex-col space-y-6">
+        <Button>
+          <Link className="no-underline text-black" href="/storyTeller">
+            <span>Start a Story</span>
+          </Link>
+        </Button>
+        <Button>
+          <Link className="no-underline text-black" href="/Login">
+            <span>Log in</span>
+          </Link>
+        </Button>
+      </div>
+      <Link
+        href="/CreateAccount"
+        className="mt-2 mb-2 no-underline text-[14px] text-[#2f856b] hover:text-[#3da284]"
+      >
         Create Account
       </Link>
       {/* <Link href="/savedStories" className="text-blue-500 hover:text-blue700">Saved stories</Link> */}
@@ -55,15 +62,15 @@ export default function Home() {
 
       {isLoggedIn ? (
         <Link
-          href="/savedStories"
-          className="text-blue-500 hover:text-blue-700"
+          href="/SavedStories"
+          className="text-[#2f856b] hover:text-[#3da284]"
         >
           Saved Stories
         </Link>
       ) : (
         <button
           onClick={() => alert("You need to be logged in to access this page.")}
-          className="underline text-blue-500 hover:text-blue-700"
+          className="p-3 w-[200px] mt-6 text-center text-[16px] bg-[#ffa88d] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none"
         >
           Saved Stories
         </button>
