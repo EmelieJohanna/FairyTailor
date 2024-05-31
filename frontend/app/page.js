@@ -29,7 +29,9 @@ export default function Home() {
           FairyTailor
         </text>
       </svg>
-      <p className="mb-10 text-xl text-[#5bba9d]">Create your own stories</p>
+      <p className="opacity-75 mb-10 text-xl text-[#5bba9d]">
+        Create your own stories
+      </p>
 
       <Image
         className="w-[300px] md:w-[300] h-auto mb-10"

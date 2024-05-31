@@ -2,6 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Button from "../components/Button";
+import Image from "next/image";
+import crown from "/public/crown.png";
 
 export default function CreateAccount() {
   const [username, setUsername] = useState("");
@@ -37,42 +40,42 @@ export default function CreateAccount() {
 
   return (
     <div
-      className="flex min-h-screen flex-col items-center justify-center p-24"
+      className="flex flex-col items-center"
       style={{
-        backgroundImage: "url('/three.webp')",
+        backgroundImage: "url('/bg_hearts.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="flex flex-col items-center">
-        <div className="flex flex-col bg-pink-300 bg-opacity-50 justify-content items-center w-96 h-96 text-yellow-50 rounded">
-          <p className="mt-8">Create Account</p>
-          <label htmlFor="username" className="mt-20">
-            Username:
-          </label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <label htmlFor="password" className="mt-8">
-            Password:
-          </label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button
-            onClick={handleCreateAccount}
-            className="bg-white text-black rounded-full px-5 py-2 cursor-pointer mt-8"
-          >
-            Create Account
-          </button>
-        </div>
+      <div className="flex flex-col justify-content items-center px-48 py-24">
+        <p className="mt-8 text-[#2f856b] text-2xl font-bold">Create Account</p>
+        <Image
+          className="w-[90px] h-auto mt-6"
+          src={crown}
+          alt="A yellow crown"
+          priority
+        ></Image>
+        <label htmlFor="username" className="mt-8 text-[#2f856b]">
+          Username:
+        </label>
+        <input
+          type="text"
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="p-2 w-[180px] mt-2 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-[#abc8c0] border-[#2f856b]"
+        />
+        <label htmlFor="password" className="mt-8 text-[#2f856b]">
+          Password:
+        </label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="p-2 w-[180px] mb-10 mt-2 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-[#abc8c0] border-[#2f856b]"
+        />
+        <Button onClick={handleCreateAccount}>Create Account</Button>
       </div>
     </div>
   );

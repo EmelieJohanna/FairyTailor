@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useStory } from "../contexts/StoryContext";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import Image from "next/image";
+import star from "/public/star.png";
 
 export default function StoryOutput() {
   const { isLoggedIn } = useAuth();
@@ -124,9 +126,17 @@ export default function StoryOutput() {
             onClick={() =>
               alert("You need to be logged in to save your story.")
             }
-            className="p-3 w-[200px] bg-[#9bf2d9] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
+            className="text-[16px] text-[#2f856b] bg-transparent border-0 cursor-pointer"
           >
-            Save & Finish
+            <span className="flex justify-center">
+              <Image
+                className="w-[18px] h-auto mr-2"
+                src={star}
+                alt="A pink bowtie"
+                priority
+              ></Image>
+              Save & Finish
+            </span>
           </button>
         )}
       </div>
