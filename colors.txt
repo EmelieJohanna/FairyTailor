@@ -1,0 +1,23 @@
+//----- HEX codes for colors ---//
+
+Very light green for app background
+#e6fef7
+
+Medium green for buttons
+#9bf2d9
+
+Dark green for button border
+#2f856b
+
+Light pink for input field background
+#fff0eb
+
+Darker pink for buttons/details/+ symbol
+#ffa88d
+
+Very light pink background _behind_ app
+#F5F5F5
+
+-----------------------------------------
+bg-[#XXXXXX]
+text-[#XXXXXX]

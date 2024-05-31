@@ -5,3 +5,16 @@
   margin: 0;
   padding: 0;
 }
+
+.bg-hearts {
+  background-image: url("/frontend/public/bg_hearts.png");
+  background-size: cover;
+  background-position: center;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap");
+
+.font-poetsen-one {
+  font-family: "Poetsen One", sans-serif;
+  opacity: 0.8;
+}

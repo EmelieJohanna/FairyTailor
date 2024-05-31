@@ -1,71 +1,81 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import StoryCard from "../components/StoryCard";
+import { useState, useEffect } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
-function SavedStories() {
-  const [stories, setStories] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+const SavedStoriesPage = () => {
+  const { isLoggedIn } = useAuth();
+  const [savedStories, setSavedStories] = useState([]);
+  const [selectedStory, setSelectedStory] = useState(null);
 
   useEffect(() => {
-    setLoading(true);
-    async function fetchStories() {
-      try {
-        const response = await fetch("http://localhost:3008/allStories");
-        if (!response.ok) {
-          throw new Error("Failed to fetch all stories");
+    if (isLoggedIn) {
+      const fetchSavedStories = async () => {
+        try {
+          const token = localStorage.getItem("sessionId");
+          const response = await fetch(
+            "http://localhost:3008/getSavedStories",
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const data = await response.json();
+          setSavedStories(data);
+        } catch (error) {
+          console.error("Error fetching saved stories", error);
         }
-        const data = await response.json();
+      };
 
-        setStories(data);
-        console.log("FEtchh:", stories);
-        console.log("data:", data);
-        setLoading(false);
-        setError(null);
-      } catch (error) {
-        console.error("Error fetching all stories", error);
-      }
+      fetchSavedStories();
     }
-
-    fetchStories();
-  }, []);
-
-  useEffect(() => {
-    console.log("Updated stories", stories);
-  }, [stories]);
-
-  // console.log(
-  //   "Loading:",
-  //   loading,
-  //   "Error:",
-  //   error,
-  //   "Stories Length:",
-  //   stories.length
-  // );
+  }, [isLoggedIn]);
 
   return (
-    <div className="bg-teal-600 min-h-screen">
-      <h1 className="text-white flex">My Fairy Tale Stories</h1>
-      <div className="flex gap-2 flex-wrap">
-        {loading ? (
-          <p>Loading stories...</p>
-        ) : error ? (
-          <p>Error: {error}</p>
-        ) : stories.length > 0 ? (
-          stories.map((story) => <StoryCard key={story.id} story={story} />)
-        ) : (
-          <p>No stories found.</p>
-        )}
+    <div className="saved-stories p-4">
+      <h2 className="text-2xl font-bold mb-4">Saved Stories</h2>
+      <div className="story-list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {savedStories.map((story) => (
+          <div
+            key={story.id}
+            className="story-thumbnail cursor-pointer"
+            onClick={() => {
+              console.log("Selected Story:", story);
+              setSelectedStory(story);
+            }}
+          >
+            {story.image_url && (
+              <img
+                src={story.image_url}
+                alt="Thumbnail"
+                className="w-24 h-24 object-cover"
+              />
+            )}
+          </div>
+        ))}
       </div>
+      {selectedStory && (
+        <div className="story-details mt-4 p-4 border rounded bg-gray-100">
+          <p>{selectedStory.story_text}</p>
+          {selectedStory.image_url && (
+            <img
+              src={selectedStory.image_url}
+              alt="Full Image"
+              className="h-48 w-full object-cover mt-2"
+            />
+          )}
+          <button
+            className="mt-2 px-4 py-2 bg-red-500 text-white rounded"
+            onClick={() => setSelectedStory(null)}
+          >
+            Close
+          </button>
+        </div>
+      )}
     </div>
   );
-}
+};
 
-export default SavedStories;
-
-// const stories = [
-//   { title: "The Magic Forest", imageUrl: "/unicorn.webp" },
-//   { title: "The Magic Forest", imageUrl: "/unicorn.webp" },
-//   { title: "The Magic Forest", imageUrl: "/unicorn.webp" },
-// ];
+export default SavedStoriesPage;
