@@ -24,7 +24,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const pool = mysql.createPool({
@@ -32,7 +31,7 @@ const pool = mysql.createPool({
   user: "root",
   password: "root",
   database: "story_tailor",
-  port: 8889,
+  port: 3306,
 });
 
 // help function to make code look nicer
@@ -107,7 +106,6 @@ app.post("/sessions", async (req, res) => {
     res.status(500).send("Error during login");
   }
 });
-
 
 app.post("/storyTeller", async (req, res) => {
   const storyType = req.body.storyType || "fairytale";
@@ -202,7 +200,9 @@ app.get("/getSavedStories", async (req, res) => {
 
   try {
     // Validate token and get user ID
-    const session = await query("SELECT * FROM sessions WHERE token = ?", [token]);
+    const session = await query("SELECT * FROM sessions WHERE token = ?", [
+      token,
+    ]);
     if (!session || session.length === 0) {
       return res.status(401).send("Invalid session token");
     }
@@ -214,7 +214,7 @@ app.get("/getSavedStories", async (req, res) => {
     const stories = await query(sql, [user_id]);
 
     // Modify imageUrl to include the full URL path
-    const updatedStories = stories.map(story => {
+    const updatedStories = stories.map((story) => {
       if (story.image_url) {
         story.image_url = `http://localhost:3008/${story.image_url}`;
       }

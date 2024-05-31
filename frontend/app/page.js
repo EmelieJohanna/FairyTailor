@@ -52,7 +52,7 @@ export default function Home() {
         {/* <Link href="/savedStories" className="text-blue-500 hover:text-blue700">Saved stories</Link> */}
         {/* Conditional rendering for Saved Stories link */}
 
-        {!isLoggedIn ? (
+        {isLoggedIn ? (
           <div className="flex flex-col items-center">
             <button className="p-3 w-[200px] text-center text-[16px] bg-[#d6fff3] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none">
               <span className="flex justify-center items-center">
