@@ -49,7 +49,7 @@ export default function StoryInput() {
         <StarsLoader count={8} />
       ) : (
         <div
-          className=" text-center flex flex-col h-[600px] justify-between"
+          className="text-center flex flex-col h-[600px] justify-between md:max-w-lg rounded-lg px-48 py-24"
           style={{
             backgroundImage: "url('/bg_hearts.png')",
             backgroundSize: "cover",

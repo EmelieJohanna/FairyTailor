@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useStory } from "../contexts/StoryContext";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 export default function StoryOutput() {
   const { isLoggedIn } = useAuth();
@@ -75,26 +76,40 @@ export default function StoryOutput() {
   const currentPageContent = storyChunks[currentPage];
 
   return (
-    <div className=" m-4 flex flex-col h-screen w-[400px] md:max-w-lg bg-white bg-opacity-50 rounded-lg p-4 overflow-auto">
-      <p className="text-xl">{currentPageContent}</p>
+    <div className="flex flex-col items-center max-w-xs md:max-w-lg bg-white bg-opacity-50 rounded-lg p-10 overflow-auto">
       {imageUrl && (
-        <img src={imageUrl} alt="Generated" className="rounded-xl my-8" />
+        <img
+          src={imageUrl}
+          alt="Generated"
+          className="rounded-xl my-8 w-full"
+        />
       )}
-      <div className="flex justify-between mt-4 mb-24">
-        <button
-          onClick={prevPage}
-          className="text-xl bg-transparent text-black border-none cursor-pointer"
-          disabled={currentPage === 0}
-        >
-          Previous
-        </button>
-        <button
-          onClick={nextPage}
-          className="text-xl bg-transparent text-black border-none cursor-pointer"
-          disabled={currentPage >= storyChunks.length - 1}
-        >
-          Next
-        </button>
+      <p className="text-xl font-serif">{currentPageContent}</p>
+
+      <div className="flex w-full justify-between mt-8 mb-12">
+        <div>
+          <button
+            onClick={prevPage}
+            className="text-lg bg-transparent text-black border-none cursor-pointer"
+            disabled={currentPage === 0}
+          >
+            <span className="flex items-center">
+              <MdKeyboardArrowLeft className="text-2xl text-[#DE8888]" />
+              Previous
+            </span>
+          </button>
+        </div>
+        <div>
+          <button
+            onClick={nextPage}
+            className="text-lg bg-transparent text-black border-none cursor-pointer"
+            disabled={currentPage >= storyChunks.length - 1}
+          >
+            <span className="flex items-center">
+              Next <MdKeyboardArrowRight className="text-2xl text-[#DE8888]" />
+            </span>
+          </button>
+        </div>
       </div>
       <div className="flex flex-col items-center">
         {isLoggedIn ? (
