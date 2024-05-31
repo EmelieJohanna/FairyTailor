@@ -39,8 +39,8 @@ export default function Loggain() {
         alert("Wrong username or password.");
       }
     } catch (error) {
-      console.error("Något gick fel:", error);
-      alert("Något gick fel vid inloggning.");
+      console.error("Something went wrong:", error);
+      alert("Login failed");
     } finally {
       setIsLoggedIn(true);
       setPassword("");
@@ -50,12 +50,14 @@ export default function Loggain() {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-col justify-content items-center w-96 h-96">
-        <p className="mt-8 text-[#2f856b] text-2xl font-bold">Login</p>
+      <div className="flex flex-col justify-content items-center w-96">
+        <p className="font-poetsen-one mt-8 text-[#2f856b] text-2xl font-bold">
+          Login
+        </p>
         <Image
           className="w-[80px] h-auto mt-8"
           src={bow}
-          alt="Cute bear cartoon"
+          alt="A pink bowtie"
           priority
         ></Image>
         <label htmlFor="username" className="mt-20 text-[#2f856b]">

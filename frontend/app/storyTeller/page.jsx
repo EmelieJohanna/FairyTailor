@@ -3,6 +3,7 @@
 import { useStory } from "../contexts/StoryContext";
 import StoryInput from "../components/StoryInput";
 import StoryOutput from "../components/StoryOutput";
+import Header from "../components/Header";
 
 export default function StoryTeller() {
   const { isStoryFetched } = useStory();
