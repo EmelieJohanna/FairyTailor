@@ -50,7 +50,7 @@ const SavedStories = () => {
               <img
                 src={story.image_url}
                 alt="Thumbnail"
-                className="w-24 h-24 object-cover"
+                className="w-24 h-24 object-cover rounded-lg"
               />
             )}
           </div>
