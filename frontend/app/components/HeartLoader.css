@@ -1,0 +1,77 @@
+.loader {
+  position: relative;
+  width: 200px; /* Increased width */
+  height: 200px; /* Increased height */
+  margin: 50px auto;
+}
+
+.loader img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  animation: rotate 2s linear infinite, scaleUp 1s infinite alternate;
+}
+
+.loader img:nth-child(1) {
+  animation-delay: 0s;
+  transform: rotate(0deg) translate(80px) translateX(-50%) translateY(-50%);
+}
+
+.loader img:nth-child(2) {
+  animation-delay: 0.25s;
+  transform: rotate(90deg) translate(80px) translateX(-50%) translateY(-50%);
+}
+
+.loader img:nth-child(3) {
+  animation-delay: 0.5s;
+  transform: rotate(180deg) translate(80px) translateX(-50%) translateY(-50%);
+}
+
+.loader img:nth-child(4) {
+  animation-delay: 0.75s;
+  transform: rotate(270deg) translate(80px) translateX(-50%) translateY(-50%);
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg) translate(80px) translateX(-50%) translateY(-50%);
+  }
+  100% {
+    transform: rotate(360deg) translate(80px) translateX(-50%) translateY(-50%);
+  }
+}
+
+@keyframes scaleUp {
+  0% {
+    width: 20px;
+    height: 20px;
+  }
+  100% {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@keyframes dot {
+  0%,
+  20% {
+    opacity: 0;
+  }
+  40%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.dot1 {
+  animation: dot 1.5s infinite;
+}
+
+.dot2 {
+  animation: dot 1.5s infinite 0.5s;
+}
+
+.dot3 {
+  animation: dot 1.5s infinite 1s;
+}

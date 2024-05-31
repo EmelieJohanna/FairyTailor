@@ -4,6 +4,7 @@ import axios from "axios";
 import { useStory } from "../contexts/StoryContext";
 import StarsLoader from "./StarsLoader";
 import "../globals.css";
+import Button from "./Button";
 
 export default function StoryInput() {
   const {
@@ -75,13 +76,14 @@ export default function StoryInput() {
               className="p-2 mb-4 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
             />
           </div>
+
           <div>
-            <button
+            <Button
               onClick={fetchStory}
               className="p-3 bg-[#9bf2d9] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
             >
               Tell Me a Story
-            </button>
+            </Button>
           </div>
         </div>
       )}
