@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
-const SavedStoriesPage = () => {
+const SavedStories = () => {
   const { isLoggedIn } = useAuth();
   const [savedStories, setSavedStories] = useState([]);
   const [selectedStory, setSelectedStory] = useState(null);
@@ -78,4 +78,4 @@ const SavedStoriesPage = () => {
   );
 };
 
-export default SavedStoriesPage;
+export default SavedStories;

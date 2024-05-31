@@ -48,13 +48,13 @@ export default function Home() {
           </Link>
         </Button>
         <Button>
-          <Link className="no-underline text-black" href="/Login">
+          <Link className="no-underline text-black" href="/login">
             <span>Log in</span>
           </Link>
         </Button>
       </div>
       <Link
-        href="/CreateAccount"
+        href="/createAccount"
         className="mt-2 mb-2 no-underline text-[14px] text-[#2f856b] hover:text-[#3da284]"
       >
         Create Account
@@ -64,7 +64,7 @@ export default function Home() {
 
       {isLoggedIn ? (
         <Link
-          href="/SavedStories"
+          href="/savedStories"
           className="text-[#2f856b] hover:text-[#3da284]"
         >
           Saved Stories
