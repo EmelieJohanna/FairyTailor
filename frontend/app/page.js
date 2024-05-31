@@ -5,6 +5,7 @@ import { useAuth } from "./contexts/AuthContext";
 import Button from "./components/Button";
 import Image from "next/image";
 import storyBear from "/public/storyBear_transparent.png";
+import heart from "/public/heart.png";
 
 export default function Home() {
   const { isLoggedIn } = useAuth();
@@ -47,36 +48,48 @@ export default function Home() {
             <span>Start a Story</span>
           </Link>
         </Button>
-        <Button>
-          <Link className="no-underline text-black" href="/Login">
-            <span>Log in</span>
-          </Link>
-        </Button>
-      </div>
-      <Link
-        href="/CreateAccount"
-        className="mt-2 mb-2 no-underline text-[14px] text-[#2f856b] hover:text-[#3da284]"
-      >
-        Create Account
-      </Link>
-      {/* <Link href="/savedStories" className="text-blue-500 hover:text-blue700">Saved stories</Link> */}
-      {/* Conditional rendering for Saved Stories link */}
 
-      {isLoggedIn ? (
-        <Link
-          href="/SavedStories"
-          className="text-[#2f856b] hover:text-[#3da284]"
-        >
-          Saved Stories
-        </Link>
-      ) : (
-        <button
-          onClick={() => alert("You need to be logged in to access this page.")}
-          className="p-3 w-[200px] mt-6 text-center text-[16px] bg-[#ffa88d] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none"
-        >
-          Saved Stories
-        </button>
-      )}
+        {/* <Link href="/savedStories" className="text-blue-500 hover:text-blue700">Saved stories</Link> */}
+        {/* Conditional rendering for Saved Stories link */}
+
+        {!isLoggedIn ? (
+          <div className="flex flex-col items-center">
+            <button className="p-3 w-[200px] text-center text-[16px] bg-[#d6fff3] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none">
+              <span className="flex justify-center items-center">
+                <Image
+                  className="w-[18px] h-auto mr-2"
+                  src={heart}
+                  alt="A heart"
+                  priority
+                ></Image>
+                <Link
+                  href="/SavedStories"
+                  className="text-[#2f856b] hover:text-[#3da284] no-underline"
+                >
+                  Saved Stories
+                </Link>
+              </span>
+            </button>
+            <button className="text-[#2f856b] hover:text-[#3da284] no-underline mt-8 text-[16px] bg-transparent border-none cursor-pointer">
+              Log out
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center">
+            <Button>
+              <Link className="no-underline text-black" href="/Login">
+                <span>Log in</span>
+              </Link>
+            </Button>
+            <Link
+              href="/CreateAccount"
+              className="mt-2 mb-2 no-underline text-[14px] text-[#2f856b] hover:text-[#3da284]"
+            >
+              Create Account
+            </Link>
+          </div>
+        )}
+      </div>
     </main>
   );
 }
