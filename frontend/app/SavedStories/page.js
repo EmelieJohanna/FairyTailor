@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useStory } from "../contexts/StoryContext";
 import { useRouter } from "next/navigation";
 
-const SavedStoriesPage = () => {
+const SavedStories = () => {
   const { isLoggedIn } = useAuth();
   const {
     setStory,
@@ -70,7 +70,7 @@ const SavedStoriesPage = () => {
               <img
                 src={story.image_url}
                 alt="Thumbnail"
-                className="w-24 h-24 object-cover"
+                className="w-24 h-24 object-cover rounded-lg"
               />
             )}
           </div>
@@ -80,4 +80,4 @@ const SavedStoriesPage = () => {
   );
 };
 
-export default SavedStoriesPage;
+export default SavedStories;

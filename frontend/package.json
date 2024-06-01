@@ -13,8 +13,12 @@
     "next": "14.2.2",
     "react": "^18",
     "react-dom": "^18",
+<<<<<<< HEAD
     "react-router-dom": "^6.23.1",
     "switch": "^0.0.0"
+=======
+    "react-icons": "^5.2.1"
+>>>>>>> f0b14df58a4c470f06a3d7426ae0f44d62b2f8bc
   },
   "devDependencies": {
     "postcss": "^8",
