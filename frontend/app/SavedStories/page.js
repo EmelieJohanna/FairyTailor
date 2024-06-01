@@ -2,11 +2,21 @@
 
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { useStory } from "../contexts/StoryContext";
+import { useRouter } from "next/navigation";
 
 const SavedStoriesPage = () => {
   const { isLoggedIn } = useAuth();
+  const {
+    setStory,
+    setImageUrl,
+    setStoryType,
+    setStoryHappening,
+    setCurrentPage,
+    setIsStoryFetched,
+  } = useStory();
   const [savedStories, setSavedStories] = useState([]);
-  const [selectedStory, setSelectedStory] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -23,15 +33,28 @@ const SavedStoriesPage = () => {
             }
           );
           const data = await response.json();
+           console.log("Data received from backend:", data); 
+        
           setSavedStories(data);
         } catch (error) {
           console.error("Error fetching saved stories", error);
         }
       };
-
+       console.log("Fetching saved stories...");
       fetchSavedStories();
     }
   }, [isLoggedIn]);
+
+  const loadStory = (story) => {
+    console.log("Loading story:", story);
+    setStory(story.story_text || "");
+    setImageUrl(story.image_url || "");
+    setStoryType(story.story_type || "");
+    setStoryHappening(story.story_happening || "");
+    setCurrentPage(story.current_page || 0);
+    setIsStoryFetched(true);
+    router.push("/storyTeller");
+  };
 
   return (
     <div className="saved-stories p-4">
@@ -41,10 +64,7 @@ const SavedStoriesPage = () => {
           <div
             key={story.id}
             className="story-thumbnail cursor-pointer"
-            onClick={() => {
-              console.log("Selected Story:", story);
-              setSelectedStory(story);
-            }}
+            onClick={() => loadStory(story)}
           >
             {story.image_url && (
               <img
@@ -56,24 +76,6 @@ const SavedStoriesPage = () => {
           </div>
         ))}
       </div>
-      {selectedStory && (
-        <div className="story-details mt-4 p-4 border rounded bg-gray-100">
-          <p>{selectedStory.story_text}</p>
-          {selectedStory.image_url && (
-            <img
-              src={selectedStory.image_url}
-              alt="Full Image"
-              className="h-48 w-full object-cover mt-2"
-            />
-          )}
-          <button
-            className="mt-2 px-4 py-2 bg-red-500 text-white rounded"
-            onClick={() => setSelectedStory(null)}
-          >
-            Close
-          </button>
-        </div>
-      )}
     </div>
   );
 };

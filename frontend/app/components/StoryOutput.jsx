@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useStory } from "../contexts/StoryContext";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
@@ -9,51 +9,37 @@ import star from "/public/star.png";
 
 export default function StoryOutput() {
   const { isLoggedIn } = useAuth();
-  const { story, imageUrl, storyType, storyHappening } = useStory();
-  const [currentPage, setCurrentPage] = useState(0);
+  const {
+    story,
+    imageUrl,
+    storyType,
+    storyHappening,
+    currentPage,
+    setCurrentPage,
+  } = useStory();
+  const [storyChunks, setStoryChunks] = useState([]);
 
-  const saveStory = async () => {
-    const token = localStorage.getItem("sessionId");
+  useEffect(() => {
+    console.log("Story state in StoryOutput:", {
+      story,
+      imageUrl,
+      storyType,
+      storyHappening,
+      currentPage,
+    });
 
-    try {
-      const response = await fetch("http://localhost:3008/saveStory", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          storyType,
-          storyHappening,
-          storyText: story,
-          image_url: imageUrl,
-        }),
-      });
+    const chunks = splitStoryIntoChunks(story);
+    setStoryChunks(chunks);
+  }, [story, imageUrl, storyType, storyHappening]);
 
-      if (!response.ok) {
-        throw new Error("Failed to save story");
-      }
+  useEffect(() => {
+    // Ensure the story is split into chunks when the story changes
+    setStoryChunks(splitStoryIntoChunks(story));
+  }, [story]);
 
-      const data = await response.json();
-      console.log(data.message);
-    } catch (error) {
-      console.error("Error saving story", error);
-    }
-  };
+  const splitStoryIntoChunks = (story = "", chunkSize = 200) => {
+    if (!story) return []; // Return empty array if story is undefined or null
 
-  const nextPage = () => {
-    if (currentPage < Math.ceil(splitStoryIntoChunks(story).length - 1)) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const prevPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const splitStoryIntoChunks = (story, chunkSize = 200) => {
     const words = story.split(" ");
     const chunks = [];
     let chunk = "";
@@ -74,8 +60,49 @@ export default function StoryOutput() {
     return chunks;
   };
 
-  const storyChunks = splitStoryIntoChunks(story);
-  const currentPageContent = storyChunks[currentPage];
+  const nextPage = () => {
+    if (currentPage < storyChunks.length - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const saveStory = async () => {
+    const token = localStorage.getItem("sessionId");
+
+    try {
+      const response = await fetch("http://localhost:3008/saveStory", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          storyType,
+          storyHappening,
+          storyText: story,
+          image_url: imageUrl,
+          currentPage,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save story");
+      }
+
+      const data = await response.json();
+      console.log(data.message);
+    } catch (error) {
+      console.error("Error saving story", error);
+    }
+  };
+
+  const currentPageContent = storyChunks[currentPage] || "";
 
   return (
     <div className="flex flex-col items-center max-w-xs md:max-w-lg bg-white bg-opacity-50 rounded-lg p-10 overflow-auto">
@@ -134,7 +161,7 @@ export default function StoryOutput() {
                 src={star}
                 alt="A pink bowtie"
                 priority
-              ></Image>
+              />
               Save & Finish
             </span>
           </button>

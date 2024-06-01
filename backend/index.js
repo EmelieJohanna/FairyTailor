@@ -31,7 +31,7 @@ const pool = mysql.createPool({
   user: "root",
   password: "root",
   database: "story_tailor",
-  port: 3306,
+  port: 8889,
 });
 
 // help function to make code look nicer
@@ -150,7 +150,8 @@ app.post("/generateImage", async (req, res) => {
 });
 
 app.post("/saveStory", async (req, res) => {
-  const { storyType, storyHappening, storyText, image_url } = req.body;
+  const { storyType, storyHappening, storyText, image_url, currentPage } =
+    req.body;
   const token = req.headers.authorization.split(" ")[1]; // Extract token from Authorization header
 
   try {
@@ -184,8 +185,15 @@ app.post("/saveStory", async (req, res) => {
     // Save story with user_id and relative image path
     const relativeImagePath = `uploads/${imageFilename}`;
     const result = await query(
-      "INSERT INTO stories (story_type, story_happening, story_text, image_url, user_id) VALUES (?, ?, ?, ?, ?)",
-      [storyType, storyHappening, storyText, relativeImagePath, user_id]
+      "INSERT INTO stories (story_type, story_happening, story_text, image_url, user_id, current_page) VALUES (?, ?, ?, ?, ?, ?)",
+      [
+        storyType,
+        storyHappening,
+        storyText,
+        relativeImagePath,
+        user_id,
+        currentPage,
+      ]
     );
 
     res.status(200).json({ message: "Story saved", storyId: result.insertId });
@@ -195,23 +203,31 @@ app.post("/saveStory", async (req, res) => {
   }
 });
 
+
 app.get("/getSavedStories", async (req, res) => {
   const token = req.headers.authorization.split(" ")[1]; // Extract token from Authorization header
 
   try {
+    console.log("Received token:", token); 
     // Validate token and get user ID
     const session = await query("SELECT * FROM sessions WHERE token = ?", [
       token,
     ]);
+
+    console.log("Session data:", session); 
+
     if (!session || session.length === 0) {
       return res.status(401).send("Invalid session token");
     }
 
     const user_id = session[0].user_id;
+    console.log("User ID:", user_id);
 
     // Fetch stories for user_id
     const sql = "SELECT * FROM stories WHERE user_id = ?";
     const stories = await query(sql, [user_id]);
+
+    console.log("Fetched stories:", stories);
 
     // Modify imageUrl to include the full URL path
     const updatedStories = stories.map((story) => {
@@ -227,6 +243,7 @@ app.get("/getSavedStories", async (req, res) => {
     res.status(500).send("Failed to fetch user stories");
   }
 });
+
 
 app.delete("/userStories/:id", async (req, res) => {
   const { id } = req.params;
@@ -249,7 +266,7 @@ app.delete("/userStories/:id", async (req, res) => {
     if (story.length === 0) {
       return res.status(404).send("Story not found");
     }
-    await query("DELETE FROM storis WHERE id=?", [id]);
+    await query("DELETE FROM stories WHERE id=?", [id]);
     res.send("Story deleted successfully");
   } catch (error) {
     console.error("Error deleting story", error);

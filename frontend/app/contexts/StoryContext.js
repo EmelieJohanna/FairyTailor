@@ -8,6 +8,7 @@ export const StoryProvider = ({ children }) => {
   const [storyType, setStoryType] = useState("");
   const [storyHappening, setStoryHappening] = useState("");
   const [isStoryFetched, setIsStoryFetched] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const handleStorySubmit = (storyText, image) => {
     setStory(storyText);
@@ -15,17 +16,32 @@ export const StoryProvider = ({ children }) => {
     setIsStoryFetched(true);
   };
 
+  console.log(
+    "Story data:",
+    story,
+    imageUrl,
+    storyType,
+    storyHappening,
+    isStoryFetched,
+    currentPage
+  );
+
   return (
     <StoryContext.Provider
       value={{
         story,
+        setStory,
         imageUrl,
+        setImageUrl,
         isStoryFetched,
+        setIsStoryFetched,
         storyType,
         setStoryType,
         storyHappening,
         setStoryHappening,
         handleStorySubmit,
+        currentPage,
+        setCurrentPage,
       }}
     >
       {children}
