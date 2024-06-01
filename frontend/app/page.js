@@ -63,7 +63,7 @@ export default function Home() {
                   priority
                 ></Image>
                 <Link
-                  href="/savedStories"
+                  href="/SavedStories"
                   className="text-[#2f856b] hover:text-[#3da284] no-underline"
                 >
                   Saved Stories
@@ -77,12 +77,12 @@ export default function Home() {
         ) : (
           <div className="flex flex-col items-center">
             <Button>
-              <Link className="no-underline text-black" href="/login">
+              <Link className="no-underline text-black" href="/Login">
                 <span>Log in</span>
               </Link>
             </Button>
             <Link
-              href="/createAccount"
+              href="/CreateAccount"
               className="mt-2 mb-2 no-underline text-[14px] text-[#2f856b] hover:text-[#3da284]"
             >
               Create Account
