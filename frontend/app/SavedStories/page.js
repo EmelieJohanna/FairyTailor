@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useStory } from "../contexts/StoryContext";
 import { useRouter } from "next/navigation";
+import AddStoryBtn from "./components/AddStoryBtn";
+import EditDoneButton from "./components/EditDoneBtn";
+import StoryThumbnail from "./components/StoryThumbnail";
+import StoryDetails from "./components/StoryDetails";
 
 const SavedStories = () => {
   const { isLoggedIn } = useAuth();
@@ -17,6 +21,8 @@ const SavedStories = () => {
   } = useStory();
   const [savedStories, setSavedStories] = useState([]);
   const router = useRouter();
+  const [selectedStory, setSelectedStory] = useState(null);
+  const [isEditing, setIsEditing] = useState(false); // State to manage edit mode
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -33,14 +39,13 @@ const SavedStories = () => {
             }
           );
           const data = await response.json();
-           console.log("Data received from backend:", data); 
-        
+          console.log("Data received from backend:", data);
           setSavedStories(data);
         } catch (error) {
           console.error("Error fetching saved stories", error);
         }
       };
-       console.log("Fetching saved stories...");
+      console.log("Fetching saved stories...");
       fetchSavedStories();
     }
   }, [isLoggedIn]);
@@ -56,26 +61,49 @@ const SavedStories = () => {
     router.push("/storyTeller");
   };
 
+  const handleDeleteStory = async (storyId) => {
+    try {
+      const token = localStorage.getItem("sessionId");
+      await fetch(`http://localhost:3008/deleteStory/${storyId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setSavedStories(savedStories.filter((story) => story.id !== storyId));
+    } catch (error) {
+      console.error("Error deleting story", error);
+    }
+  };
+
   return (
-    <div className="saved-stories p-4">
-      <h2 className="text-2xl font-bold mb-4">Saved Stories</h2>
-      <div className="story-list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="p-4">
+      <h2 className="mb-12 text-center text-2xl font-bold text-dark-green">
+        Saved Stories
+      </h2>
+      <div className="flex place-content-end mb-8">
+        <EditDoneButton onClick={() => setIsEditing(!isEditing)} />
+      </div>
+      <div className="story-list grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 content-evenly">
+        <AddStoryBtn />
         {savedStories.map((story) => (
-          <div
+          <StoryThumbnail
             key={story.id}
             className="story-thumbnail cursor-pointer"
             onClick={() => loadStory(story)}
-          >
-            {story.image_url && (
-              <img
-                src={story.image_url}
-                alt="Thumbnail"
-                className="w-24 h-24 object-cover rounded-lg"
-              />
-            )}
-          </div>
+            story={story}
+            isEditing={isEditing}
+            onDelete={handleDeleteStory}
+          />
         ))}
       </div>
+      {selectedStory && (
+        <StoryDetails
+          story={selectedStory}
+          onClose={() => setSelectedStory(null)}
+        />
+      )}
     </div>
   );
 };
