@@ -2,11 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import AddStoryBtn from "./components/AddStoryBtn";
+import EditDoneButton from "./components/EditDoneBtn";
+import StoryThumbnail from "./components/StoryThumbnail";
+import StoryDetails from "./components/StoryDetails";
 
 const SavedStories = () => {
   const { isLoggedIn } = useAuth();
   const [savedStories, setSavedStories] = useState([]);
   const [selectedStory, setSelectedStory] = useState(null);
+  const [isEditing, setIsEditing] = useState(false); // State to manage edit mode
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -33,46 +38,47 @@ const SavedStories = () => {
     }
   }, [isLoggedIn]);
 
+  const handleDeleteStory = async (storyId) => {
+    try {
+      const token = localStorage.getItem("sessionId");
+      await fetch(`http://localhost:3008/deleteStory/${storyId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setSavedStories(savedStories.filter((story) => story.id !== storyId));
+    } catch (error) {
+      console.error("Error deleting story", error);
+    }
+  };
+
   return (
-    <div className="saved-stories p-4">
-      <h2 className="text-2xl font-bold mb-4">Saved Stories</h2>
-      <div className="story-list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="p-4">
+      <h2 className="mb-12 text-center text-2xl font-bold text-dark-green">
+        Saved Stories
+      </h2>
+      <div className="flex place-content-end mb-8">
+        <EditDoneButton onClick={() => setIsEditing(!isEditing)} />
+      </div>
+      <div className="story-list grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 content-evenly">
+        <AddStoryBtn />
         {savedStories.map((story) => (
-          <div
+          <StoryThumbnail
             key={story.id}
-            className="story-thumbnail cursor-pointer"
-            onClick={() => {
-              console.log("Selected Story:", story);
-              setSelectedStory(story);
-            }}
-          >
-            {story.image_url && (
-              <img
-                src={story.image_url}
-                alt="Thumbnail"
-                className="w-24 h-24 object-cover rounded-lg"
-              />
-            )}
-          </div>
+            story={story}
+            onClick={setSelectedStory}
+            isEditing={isEditing}
+            onDelete={handleDeleteStory}
+          />
         ))}
       </div>
       {selectedStory && (
-        <div className="story-details mt-4 p-4 border rounded bg-gray-100">
-          <p>{selectedStory.story_text}</p>
-          {selectedStory.image_url && (
-            <img
-              src={selectedStory.image_url}
-              alt="Full Image"
-              className="h-48 w-full object-cover mt-2"
-            />
-          )}
-          <button
-            className="mt-2 px-4 py-2 bg-red-500 text-white rounded"
-            onClick={() => setSelectedStory(null)}
-          >
-            Close
-          </button>
-        </div>
+        <StoryDetails
+          story={selectedStory}
+          onClose={() => setSelectedStory(null)}
+        />
       )}
     </div>
   );

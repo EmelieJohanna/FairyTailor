@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-function EditDoneButton({ isEditMode }) {
-  const [isEditing, setIsEditing] = useState(isEditMode);
+function EditDoneBtn({ isEditMode }) {
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     setIsEditing(isEditMode);
@@ -21,4 +21,4 @@ function EditDoneButton({ isEditMode }) {
   );
 }
 
-export default EditDoneButton;
+export default EditDoneBtn;
