@@ -8,6 +8,7 @@ import AddStoryBtn from "./components/AddStoryBtn";
 import EditDoneButton from "./components/EditDoneBtn";
 import StoryThumbnail from "./components/StoryThumbnail";
 import StoryDetails from "./components/StoryDetails";
+import { MdKeyboardArrowLeft } from "react-icons/md";
 
 const SavedStories = () => {
   const { isLoggedIn } = useAuth();
@@ -61,6 +62,11 @@ const SavedStories = () => {
     router.push("/storyTeller");
   };
 
+  const toggleEditing = () => {
+    setIsEditing(!isEditing);
+    console.log("toggleEditing");
+  };
+
   const handleDeleteStory = async (storyId) => {
     try {
       const token = localStorage.getItem("sessionId");
@@ -79,11 +85,16 @@ const SavedStories = () => {
 
   return (
     <div className="p-4">
+      <MdKeyboardArrowLeft
+        onClick={() => router.push("/")}
+        className="text-4xl text-dark-green fixed left-6"
+      />
       <h2 className="mb-12 text-center text-2xl font-bold text-dark-green">
         Saved Stories
       </h2>
+
       <div className="flex place-content-end mb-8">
-        <EditDoneButton onClick={() => setIsEditing(!isEditing)} />
+        <EditDoneButton isEditing={isEditing} toggleEditing={toggleEditing} />
       </div>
       <div className="story-list grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 content-evenly">
         <AddStoryBtn />

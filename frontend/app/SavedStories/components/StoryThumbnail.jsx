@@ -16,12 +16,14 @@ const StoryThumbnail = ({ story, onClick, isEditing, onDelete }) => {
         />
       )}
       {isEditing && (
-        <DeleteStoryBtn
-          onClick={(e) => {
-            e.stopPropagation();
-            onDelete(story.id);
-          }}
-        />
+        <div className="absolute -top-5 right-4">
+          <DeleteStoryBtn
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(story.id);
+            }}
+          />
+        </div>
       )}
     </div>
   );

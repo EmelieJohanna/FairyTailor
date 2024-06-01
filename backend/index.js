@@ -31,7 +31,7 @@ const pool = mysql.createPool({
   user: "root",
   password: "root",
   database: "story_tailor",
-  port: 8889,
+  port: 3306,
 });
 
 // help function to make code look nicer
@@ -203,18 +203,17 @@ app.post("/saveStory", async (req, res) => {
   }
 });
 
-
 app.get("/getSavedStories", async (req, res) => {
   const token = req.headers.authorization.split(" ")[1]; // Extract token from Authorization header
 
   try {
-    console.log("Received token:", token); 
+    console.log("Received token:", token);
     // Validate token and get user ID
     const session = await query("SELECT * FROM sessions WHERE token = ?", [
       token,
     ]);
 
-    console.log("Session data:", session); 
+    console.log("Session data:", session);
 
     if (!session || session.length === 0) {
       return res.status(401).send("Invalid session token");
@@ -243,7 +242,6 @@ app.get("/getSavedStories", async (req, res) => {
     res.status(500).send("Failed to fetch user stories");
   }
 });
-
 
 app.delete("/userStories/:id", async (req, res) => {
   const { id } = req.params;

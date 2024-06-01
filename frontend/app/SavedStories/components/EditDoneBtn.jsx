@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
+// import { useState } from "react";
 
-function EditDoneBtn({ isEditMode }) {
-  const [isEditing, setIsEditing] = useState(false);
+function EditDoneBtn({ isEditing, toggleEditing }) {
+  // const [isEditing, setIsEditing] = useState(false);
 
-  useEffect(() => {
-    setIsEditing(isEditMode);
-  }, [isEditMode]);
+  // useEffect(() => {
+  //   setIsEditing(isEditMode);
+  // }, [isEditMode]);
 
-  const toggleEditing = () => {
-    setIsEditing(!isEditing);
-  };
+  // const toggleEditing = () => {
+  //   setIsEditing(!isEditing);
+  // };
 
   return (
     <button
