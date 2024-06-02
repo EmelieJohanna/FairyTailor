@@ -12,9 +12,9 @@ export default function DeleteStoryModal({
       role="dialog"
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-dark-green bg-opacity-75"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-dark-pink bg-opacity-75"
     >
-      <div className="bg-light-pink p-6 w-72 border-solid border-dark-pink shadow-lg">
+      <div className="bg-light-pink p-6 w-60 border-solid border-dark-pink shadow-lg">
         <h2
           id="modal-title"
           className=" text-center text-lg font-semibold mb-4"

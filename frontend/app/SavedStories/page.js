@@ -106,7 +106,7 @@ const SavedStories = () => {
     <div className="p-4">
       <MdKeyboardArrowLeft
         onClick={() => router.push("/")}
-        className="text-4xl text-dark-green fixed left-6"
+        className="text-4xl text-dark-green left-6"
       />
       <h2 className="mb-12 text-center text-2xl font-bold text-dark-green">
         Saved Stories
