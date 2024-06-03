@@ -84,37 +84,46 @@ const SavedStories = () => {
   };
 
   return (
-    <div className="p-4">
-      <MdKeyboardArrowLeft
-        onClick={() => router.push("/")}
-        className="text-4xl text-dark-green fixed left-6"
-      />
-      <h2 className="mb-12 text-center text-2xl font-bold text-dark-green">
-        Saved Stories
-      </h2>
-
-      <div className="flex place-content-end mb-8">
-        <EditDoneButton isEditing={isEditing} toggleEditing={toggleEditing} />
-      </div>
-      <div className="story-list grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 content-evenly">
-        <AddStoryBtn />
-        {savedStories.map((story) => (
-          <StoryThumbnail
-            key={story.id}
-            className="story-thumbnail cursor-pointer"
-            onClick={() => loadStory(story)}
-            story={story}
-            isEditing={isEditing}
-            onDelete={handleDeleteStory}
-          />
-        ))}
-      </div>
-      {selectedStory && (
-        <StoryDetails
-          story={selectedStory}
-          onClose={() => setSelectedStory(null)}
+    <div
+      className="flex flex-col items-center"
+      style={{
+        backgroundImage: "url('/bg_hearts.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="flex flex-col justify-content items-center px-48 py-24">
+        {" "}
+        <MdKeyboardArrowLeft
+          onClick={() => router.push("/")}
+          className="text-4xl text-dark-green fixed left-6"
         />
-      )}
+        <h2 className="mb-12 text-center text-2xl font-bold text-dark-green">
+          Saved Stories
+        </h2>
+        <div className="flex place-content-end mb-8">
+          <EditDoneButton isEditing={isEditing} toggleEditing={toggleEditing} />
+        </div>
+        <div className="story-list grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 content-evenly">
+          <AddStoryBtn />
+          {savedStories.map((story) => (
+            <StoryThumbnail
+              key={story.id}
+              className="story-thumbnail cursor-pointer"
+              onClick={() => loadStory(story)}
+              story={story}
+              isEditing={isEditing}
+              onDelete={handleDeleteStory}
+            />
+          ))}
+        </div>
+        {selectedStory && (
+          <StoryDetails
+            story={selectedStory}
+            onClose={() => setSelectedStory(null)}
+          />
+        )}
+      </div>
     </div>
   );
 };
