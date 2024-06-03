@@ -45,7 +45,7 @@ export default function Home() {
           fill="white"
           // fill="url(#textGradient)"
           stroke="#2f856b"
-          stroke-width="0.6px"
+          strokeWidth="0.6px"
           fontSize="2.5rem"
           fontFamily="Poetsen One"
           fontWeight="bold"

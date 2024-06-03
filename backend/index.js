@@ -31,7 +31,7 @@ const pool = mysql.createPool({
   user: "root",
   password: "root",
   database: "story_tailor",
-  port: 3006,
+  port: 3306,
 });
 
 // help function to make code look nicer
