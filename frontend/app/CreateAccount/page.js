@@ -10,6 +10,8 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 export default function CreateAccount() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [isUsernameUnique, setIsUsernameUnique] = useState(true);
   const router = useRouter();
 
@@ -50,16 +52,23 @@ export default function CreateAccount() {
       });
 
       if (response.ok && password !== "" && username !== "") {
-        alert("Welcome! You can now create and save stories.");
-        router.push("/login");
+        setSuccessMessage("Welcome! You can now create and save stories");
+       setTimeout(() => {
+         router.push("/login");
+       }, 3500);
       } else {
-        alert("Don't forget to enter name and password.");
+        setErrorMessage("Don't forget to enter name and password");
       }
     } catch (error) {
       console.error("Something went wrong.", error);
     } finally {
       setPassword("");
       setUsername("");
+
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 2000);
+
     }
   };
 
@@ -99,10 +108,10 @@ export default function CreateAccount() {
           id="username"
           value={username}
           onChange={handleUsernameChange}
-          className="p-2 w-[180px] mt-2 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-[#abc8c0] border-[#2f856b]"
+          className="p-2 w-[180px] mt-2 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-[#abc8c0] border-[#2f856b] mb-2"
         />
         {!isUsernameUnique && (
-          <p className="text-red-500">Username is already taken</p>
+          <p className="text-red-600">Username is already taken</p>
         )}
         <label htmlFor="password" className="mt-8 text-[#2f856b]">
           Password:
@@ -115,6 +124,8 @@ export default function CreateAccount() {
           className="p-2 w-[180px] mb-10 mt-2 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-[#abc8c0] border-[#2f856b]"
         />
         <Button onClick={handleCreateAccount}>Create Account</Button>
+        {errorMessage && <p className="text-red-600 mt-2">{errorMessage}</p>}
+        {successMessage && <p className="text-[#2f856b] mt-2">{successMessage}</p>}
       </div>
     </div>
   );

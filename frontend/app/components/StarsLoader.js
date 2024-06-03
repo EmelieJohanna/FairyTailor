@@ -41,7 +41,7 @@ const StarsLoader = ({ count }) => {
       <p
         className={`${styles.loaderText} text-yellow-600 text-xl italic font-sans`}
       >
-        Writing your Story...
+        Writing your story...
       </p>
     </div>
   );

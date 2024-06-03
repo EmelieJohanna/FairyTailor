@@ -56,6 +56,11 @@ export default function Loggain() {
     } finally {
       setPassword("");
       setUsername("");
+
+       setTimeout(() => {
+        setErrorMessage("");
+      }, 2000);
+    
     }
   };
 

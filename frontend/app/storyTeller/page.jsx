@@ -22,9 +22,9 @@ export default function StoryTeller() {
       <div className="flex flex-col items-center justify-center w-full">
         <button
           onClick={() => router.push("/")}
-          className="p-4 fixed top-3 left-0 lg:left-32 lg:mt-10 bg-transparent border-none"
+          className="p-2 fixed top-3 left-0 lg:left-32 lg:mt-10 bg-transparent border-none"
         >
-          <MdKeyboardArrowLeft className="text-4xl lg:text-6xl text-dark-green left-6 cursor-pointer" />
+          <MdKeyboardArrowLeft className="text-4xl lg:text-6xl text-dark-green cursor-pointer" />
         </button>
         {!isStoryFetched ? <StoryInput /> : <StoryOutput />}
       </div>
