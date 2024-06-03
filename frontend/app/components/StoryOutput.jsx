@@ -4,8 +4,9 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useStory } from "../contexts/StoryContext";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import Link from "next/link";
 import Image from "next/image";
-import star from "/public/star.png";
+import SaveStoryModal from "./SaveStoryModal";
 
 export default function StoryOutput() {
   const { isLoggedIn } = useAuth();
@@ -19,6 +20,8 @@ export default function StoryOutput() {
   } = useStory();
   const [storyChunks, setStoryChunks] = useState([]);
   const [saveMessage, setSaveMessage] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   useEffect(() => {
     console.log("Story state in StoryOutput:", {
@@ -113,6 +116,14 @@ export default function StoryOutput() {
     }
   };
 
+  const handleSaveStoryClick = () => {
+    if (!isLoggedIn) {
+      setIsModalOpen(true);
+    } else {
+      saveStory();
+    }
+  };
+
   const currentPageContent = storyChunks[currentPage] || "";
 
   return (
@@ -152,40 +163,45 @@ export default function StoryOutput() {
         </div>
       </div>
       <div className="flex flex-col items-center">
-        {isLoggedIn ? (
-          <div>
-            {saveMessage && <p className="text-[#2f856b]">{saveMessage}</p>}
-            <button
-              onClick={saveStory}
-              className="p-3 w-[200px] bg-[#9bf2d9] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer mt-2"
-            >
-              Save story
-            </button>
+        <div>
+          {saveMessage && <p className="text-[#2f856b]">{saveMessage}</p>}
+          <div className="flex space-x-4">
+            {isLoggedIn ? (
+              <button
+                onClick={saveStory}
+                className="p-3 w-[200px] bg-[#9bf2d9] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer mt-2"
+              >
+                Save story
+              </button>
+            ) : (
+              <button
+                onClick={handleSaveStoryClick}
+                className="p-3 w-[200px] bg-[#9bf2d9] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer mt-2"
+              >
+                Save story
+              </button>
+            )}
+            <Link href="/" className="no-underline">
+              <div
+                className="p-3 w-[200px] text-center text-[14px] bg-[#9bf2d9] text-[#2f856b]
+              hover:text-[#3da284] border-[2px] border-solid shadow-md
+              shadow-gray-400 border-[#2f856b] cursor-pointer mt-2"
+              >
+                Kill story
+              </div>
+            </Link>
           </div>
-        ) : (
-          <button
-            onClick={() =>
-              alert("You need to be logged in to save your story.")
-            }
-            className="text-[16px] text-[#2f856b] bg-transparent border-0 cursor-pointer"
-          >
-            <span className="flex justify-center">
-              <Image
-                className="w-[18px] h-auto mr-2"
-                src={star}
-                alt="A pink bowtie"
-                priority
-              />
-              Save & Finish
-            </span>
-          </button>
-        )}
+        </div>
       </div>
+      <SaveStoryModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }
 
-// "use client";
+{/* // "use client";
 
 // import { useAuth } from "../contexts/AuthContext";
 // import { useStory } from "../contexts/StoryContext";
@@ -244,4 +260,4 @@ export default function StoryOutput() {
 //       )}
 //     </div>
 //   );
-// }
+// } */}

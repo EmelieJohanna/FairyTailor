@@ -65,6 +65,13 @@ const SavedStories = () => {
     router.push("/storyTeller");
   };
 
+  const handleClick = () => {
+    setIsStoryFetched(false);
+    setStoryType("");
+    setStoryHappening("");
+    setCurrentPage(0);
+  };
+
   const toggleEditing = () => {
     setIsEditing(!isEditing);
     console.log("toggleEditing");
@@ -126,7 +133,7 @@ const SavedStories = () => {
           <EditDoneButton isEditing={isEditing} toggleEditing={toggleEditing} />
         </div>
         <div className="story-list grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 content-evenly">
-          <AddStoryBtn />
+          <AddStoryBtn onClick={handleClick}/>
           {savedStories.map((story) => (
             <StoryThumbnail
               key={story.id}
