@@ -40,7 +40,7 @@ const StarsLoader = ({ count }) => {
     <div className="flex flex-col items-center">
       <div ref={starsContainerRef} className={styles.starsContainer}></div>
       <p className="loader-text text-yellow-600 text-xl italic font-sans">
-        Writing your Story...
+        Writing your story...
       </p>
     </div>
   );
