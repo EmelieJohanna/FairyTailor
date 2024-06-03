@@ -30,12 +30,22 @@ export default function Home() {
             @import
             url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
           </style>
+          {/* <linearGradient id="textGradient" gradientTransform="rotate(144)">
+            <stop offset="0%" stop-color="rgba(247,212,225,1)" />
+            <stop
+              offset="35%"
+              stop-color="rgba(157,248,224,0.722707423580786)"
+            />
+            <stop offset="100%" stop-color="rgba(200,224,241,1)" />
+          </linearGradient> */}
         </defs>
         <text
           x="50%"
           y="60"
           fill="white"
+          // fill="url(#textGradient)"
           stroke="#2f856b"
+          stroke-width="0.6px"
           fontSize="2.5rem"
           fontFamily="Poetsen One"
           fontWeight="bold"

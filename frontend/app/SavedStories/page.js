@@ -119,22 +119,41 @@ const SavedStories = () => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center w-full min-h-screen"
+      className="flex flex-col items-center w-full min-h-screen "
       style={{
         backgroundImage: "url('/bg_hearts.png')",
         backgroundSize: "repeat",
         backgroundPosition: "center",
       }}
     >
-      <div className="flex flex-col justify-content items-center">
+      <div className="flex flex-col items-center w-full md:w-[800px] mt-4 ml-4 md:mt-20">
         <HomeButton />
 
-        <div className="flex place-content-end mb-8 w-full">
+        <div className="flex place-content-end mb-8 w-full mr-20">
           <EditDoneButton isEditing={isEditing} toggleEditing={toggleEditing} />
         </div>
-        <div className="story-list grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 content-evenly">
-          <AddStoryBtn onClick={handleClick}/>
-          {savedStories.map((story) => (
+        <div className="story-list w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-0 md:gap-y-4 content-evenly">
+          <div className="flex flex-col justify-center mb-16 md:mb-28">
+            <AddStoryBtn onClick={handleClick}/>
+          </div>
+          {savedStories.length === 0 ? (
+            <p className="text-center col-span-2 sm:col-span-3 text-dark-green">
+              No saved stories
+            </p>
+          ) : (
+            savedStories.map((story) => (
+              <StoryThumbnail
+                key={story.id}
+                className="story-thumbnail cursor-pointer"
+                onLoadFromSavedPage={() => loadStory(story, true)}
+                onLoadFromStart={() => loadStory(story, false)}
+                story={story}
+                isEditing={isEditing}
+                onDelete={() => openModal(story.id)}
+              />
+            ))
+          )}
+          {/* {savedStories.map((story) => (
             <StoryThumbnail
               key={story.id}
               className="story-thumbnail cursor-pointer"
@@ -144,7 +163,7 @@ const SavedStories = () => {
               isEditing={isEditing}
               onDelete={() => openModal(story.id)}
             />
-          ))}
+          ))} */}
         </div>
 
         {selectedStory && (
