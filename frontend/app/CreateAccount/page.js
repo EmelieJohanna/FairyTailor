@@ -63,14 +63,14 @@ export default function CreateAccount() {
 
   return (
     <div
-      className="flex flex-col items-center"
+      className="flex flex-col items-center justify-center w-full h-screen"
       style={{
         backgroundImage: "url('/bg_hearts.png')",
-        backgroundSize: "cover",
+        backgroundSize: "repeat",
         backgroundPosition: "center",
       }}
     >
-      <div className="flex flex-col justify-content items-center px-48 py-24">
+      <div className="flex flex-col justify-content items-center">
         <p className="mt-8 text-[#2f856b] text-2xl font-bold">Create Account</p>
         <Image
           className="w-[90px] h-auto mt-6"
