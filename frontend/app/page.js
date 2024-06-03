@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useAuth } from "./contexts/AuthContext";
 import { useStory } from "./contexts/StoryContext";
-import Button from "./components/Button";
 import Image from "next/image";
 import storyBear from "/public/storyBear_transparent.png";
 import heart from "/public/heart.png";
@@ -18,7 +17,7 @@ export default function Home() {
     setStoryHappening("");
     setCurrentPage(0);
   };
-  
+
   return (
     <main className="flex flex-col items-center justify-center p-24">
       <svg height="100" width="440">
@@ -49,51 +48,48 @@ export default function Home() {
         src={storyBear}
         alt="Cute bear cartoon"
         priority
-      ></Image>
-      {/* <h1 className="text-4xl font-bold mb-2 text-white">TestTailor</h1> */}
+      />
 
       <div className="flex flex-col space-y-6">
-        <Button onClick={handleClick}>
-          <Link
-            className="no-underline text-black"
-            href="/storyTeller"
-          >
-            <span>Start a Story</span>
-          </Link>
-        </Button>
-
-        {/* <Link href="/savedStories" className="text-blue-500 hover:text-blue700">Saved stories</Link> */}
-        {/* Conditional rendering for Saved Stories link */}
+        <Link
+          href="/storyTeller"
+          onClick={handleClick}
+          className="no-underline"
+        >
+          <div className="p-3 w-[200px] text-center text-[16px] bg-[#d6fff3] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none">
+            Start a Story
+          </div>
+        </Link>
 
         {isLoggedIn ? (
           <div className="flex flex-col items-center">
-            <button className="p-3 w-[200px] text-center text-[16px] bg-[#d6fff3] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none">
-              <span className="flex justify-center items-center">
-                <Image
-                  className="w-[18px] h-auto mr-2"
-                  src={heart}
-                  alt="A heart"
-                  priority
-                ></Image>
-                <Link
-                  href="/savedStories"
-                  className="text-[#2f856b] hover:text-[#3da284] no-underline"
-                >
+            <Link href="/savedStories" className="no-underline">
+              <div className="p-3 w-[200px] text-center text-[16px] bg-[#d6fff3] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none">
+                <span className="flex justify-center items-center">
+                  <Image
+                    className="w-[18px] h-auto mr-2"
+                    src={heart}
+                    alt="A heart"
+                    priority
+                  />
                   Saved Stories
-                </Link>
-              </span>
-            </button>
-            <button className="text-[#2f856b] hover:text-[#3da284] no-underline mt-8 text-[16px] bg-transparent border-none cursor-pointer" onClick={() => setIsLoggedIn(false)}>
+                </span>
+              </div>
+            </Link>
+            <button
+              className="text-[#2f856b] hover:text-[#3da284] no-underline mt-8 text-[16px] bg-transparent border-none cursor-pointer"
+              onClick={() => setIsLoggedIn(false)}
+            >
               Log out
             </button>
           </div>
         ) : (
           <div className="flex flex-col items-center">
-            <Button>
-              <Link className="no-underline text-black" href="/login">
-                <span>Log in</span>
-              </Link>
-            </Button>
+            <Link href="/login" className="no-underline">
+              <div className="p-3 w-[200px] text-center text-[16px] bg-[#d6fff3] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none">
+                Log in
+              </div>
+            </Link>
             <Link
               href="/createAccount"
               className="mt-2 mb-2 no-underline text-[14px] text-[#2f856b] hover:text-[#3da284]"
