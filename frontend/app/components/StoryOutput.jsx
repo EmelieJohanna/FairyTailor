@@ -8,6 +8,8 @@ import Link from "next/link";
 import Image from "next/image";
 import SaveStoryModal from "./SaveStoryModal";
 
+import heart from "/public/heart.png";
+
 export default function StoryOutput() {
   const { isLoggedIn } = useAuth();
   const {
@@ -126,7 +128,7 @@ export default function StoryOutput() {
   const currentPageContent = storyChunks[currentPage] || "";
 
   return (
-    <div className="flex flex-col items-center max-w-xs md:max-w-lg bg-white bg-opacity-50 rounded-lg p-10 overflow-auto">
+    <div className="flex flex-col h-fit items-center max-w-xs md:max-w-lg bg-white bg-opacity-50 rounded-lg p-10 overflow-auto">
       {imageUrl && (
         <img
           src={imageUrl}
@@ -136,7 +138,7 @@ export default function StoryOutput() {
       )}
       <p className="text-xl font-serif">{currentPageContent}</p>
 
-      <div className="flex w-full justify-between mt-8 mb-12">
+      <div className="flex w-full justify-between mt-8 mb-2 md:mb-12">
         <div>
           <button
             onClick={prevPage}
@@ -165,33 +167,46 @@ export default function StoryOutput() {
           </button>
         </div>
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center w-full">
         <div className="w-full">
           {saveMessage && <p className="text-[#2f856b]">{saveMessage}</p>}
-          <div className="flex space-x-10 md:space-x-4">
+          <div className="flex w-full justify-between">
             {isLoggedIn ? (
               <button
                 onClick={saveStory}
-                className=" w-[100px] md:w-[180px] bg-[#9bf2d9] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer mt-2 active:shadow-none"
+                className=" w-[100px] md:w-[180px] bg-transparent text-[#2f856b] hover:text-[#3da284]  cursor-pointer border-none"
               >
-                Save story
+                <span className="flex justify-center items-center text-[14px]">
+                  <Image
+                    className="w-[18px] h-auto mr-2"
+                    src={heart}
+                    alt="A heart"
+                    priority
+                  />
+                  Save story
+                </span>{" "}
               </button>
             ) : (
               <button
                 onClick={handleSaveStoryClick}
-                className=" w-[100px] md:w-[180px] bg-[#9bf2d9] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer mt-2 active:shadow-none"
+                className="bg-transparent text-[#2f856b] hover:text-[#3da284]  cursor-pointer border-none"
               >
-                Save story
+                <span className="flex justify-center items-center text-[14px]">
+                  <Image
+                    className="w-[18px] h-auto mr-2"
+                    src={heart}
+                    alt="A heart"
+                    priority
+                  />
+                  Save story
+                </span>{" "}
               </button>
             )}
-            <Link href="/" className="no-underline">
-              <div
-                className="p-3 w-[100px] md:w-[180px] text-center text-[14px] bg-[#9bf2d9] text-[#2f856b]
-              hover:text-[#3da284] border-[2px] border-solid shadow-md
-              shadow-gray-400 border-[#2f856b] cursor-pointer mt-2 active:shadow-none"
-              >
-                Discard story
-              </div>
+            <Link
+              href="/"
+              className="text-[14px] bg-transparent text-[#2f856b] hover:text-[#3da284]  cursor-pointer  no-underline"
+            >
+              Discard story
             </Link>
           </div>
         </div>
