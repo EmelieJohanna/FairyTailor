@@ -13,10 +13,13 @@ export default function CreateAccount() {
   const [isUsernameUnique, setIsUsernameUnique] = useState(true);
   const router = useRouter();
 
+  const sanitizeInput = (input) => input.replace(/[^a-zA-Z0-9]/g, "");
+
   const checkUsernameUniqueness = async (username) => {
     try {
+      const sanitizedUsername = sanitizeInput(username);
       const response = await fetch(
-        `http://localhost:3008/users/check/${username}`
+        `http://localhost:3008/users/check/${sanitizedUsername}`
       );
       const data = await response.json();
       setIsUsernameUnique(data.available);
@@ -31,6 +34,9 @@ export default function CreateAccount() {
       return;
     }
 
+    const sanitizedUsername = sanitizeInput(username);
+    const sanitizedPassword = sanitizeInput(password);
+
     try {
       const response = await fetch("http://localhost:3008/users", {
         method: "POST",
@@ -38,8 +44,8 @@ export default function CreateAccount() {
           "Content-type": "application/json",
         },
         body: JSON.stringify({
-          username: username,
-          password: password,
+          username: sanitizedUsername,
+          password: sanitizedPassword,
         }),
       });
 
