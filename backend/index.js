@@ -275,16 +275,29 @@ app.delete("/userStories/:id", async (req, res) => {
       return res.status(401).send("Invalid or expired session token");
     }
 
-    const story = await query("SELECT user_id * FROM stories WHERE user_id=?", [
-      id,
-    ]);
+    const story = await query("SELECT * FROM stories WHERE id = ?", [id]);
     if (story.length === 0) {
       return res.status(404).send("Story not found");
     }
+    // const story = await query("SELECT user_id * FROM stories WHERE user_id=?", [
+    //   id,
+    // ]);
+    // if (story.length === 0) {
+    //   return res.status(404).send("Story not found");
+    // }
+    const imagePath = path.join(__dirname, story[0].image_url);
+    fs.unlink(imagePath, (err) => {
+      if (err) {
+        console.error("Failed to delete image file", err);
+      }
+    });
+
+    // Delete story from db
     await query("DELETE FROM stories WHERE id=?", [id]);
     res.send("Story deleted successfully");
   } catch (error) {
     console.error("Error deleting story", error);
+    res.status(500).send("Error deleting story");
   }
 });
 

@@ -80,7 +80,11 @@ const SavedStories = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setSavedStories(savedStories.filter((story) => story.id !== storyId));
+      if (response.ok) {
+        setSavedStories(savedStories.filter((story) => story.id !== storyId));
+      } else {
+        console.error("Error deleting story");
+      }
     } catch (error) {
       console.error("Error deleting story", error);
     }
@@ -96,16 +100,16 @@ const SavedStories = () => {
     setShowModal(false);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (storyToDelete) {
-      handleDeleteStory(storyToDelete);
+      await handleDeleteStory(storyToDelete);
       closeModal();
     }
   };
 
   return (
     <div
-      className="flex flex-col items-center justify-center w-full h-screen"
+      className="flex flex-col items-center justify-center w-full min-h-screen"
       style={{
         backgroundImage: "url('/bg_hearts.png')",
         backgroundSize: "repeat",
