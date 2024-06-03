@@ -119,14 +119,14 @@ const SavedStories = () => {
         backgroundPosition: "center",
       }}
     >
-      <div className="flex flex-col items-center w-full md:w-[800px] md:mt-20">
+      <div className="flex flex-col items-center w-full md:w-[800px] mt-4 ml-4 md:mt-20">
         <HomeButton />
 
-        <div className="flex place-content-end mb-8 w-full">
+        <div className="flex place-content-end mb-8 w-full mr-20">
           <EditDoneButton isEditing={isEditing} toggleEditing={toggleEditing} />
         </div>
-        <div className="story-list w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 content-evenly">
-          <div className="flex flex-col justify-center">
+        <div className="story-list w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-0 md:gap-y-4 content-evenly">
+          <div className="flex flex-col justify-center mb-16 md:mb-28">
             <AddStoryBtn />
           </div>
           {savedStories.map((story) => (
