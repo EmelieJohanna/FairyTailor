@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useAuth } from "./contexts/AuthContext";
+import { useStory } from "./contexts/StoryContext";
 import Button from "./components/Button";
 import Image from "next/image";
 import storyBear from "/public/storyBear_transparent.png";
@@ -9,6 +10,14 @@ import heart from "/public/heart.png";
 
 export default function Home() {
   const { isLoggedIn } = useAuth();
+  const { setIsStoryFetched, setStoryType, setStoryHappening } = useStory();
+
+  const handleClick = () => {
+    setIsStoryFetched(false);
+    setStoryType("");
+    setStoryHappening("");
+  };
+  
   return (
     <main className="flex flex-col items-center justify-center p-24">
       <svg height="100" width="440">
@@ -43,8 +52,11 @@ export default function Home() {
       {/* <h1 className="text-4xl font-bold mb-2 text-white">TestTailor</h1> */}
 
       <div className="flex flex-col space-y-6">
-        <Button>
-          <Link className="no-underline text-black" href="/storyTeller">
+        <Button onClick={handleClick}>
+          <Link
+            className="no-underline text-black"
+            href="/storyTeller"
+          >
             <span>Start a Story</span>
           </Link>
         </Button>
