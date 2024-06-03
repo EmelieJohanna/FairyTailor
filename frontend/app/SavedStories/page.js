@@ -112,21 +112,23 @@ const SavedStories = () => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center w-full min-h-screen"
+      className="flex flex-col items-center w-full min-h-screen "
       style={{
         backgroundImage: "url('/bg_hearts.png')",
         backgroundSize: "repeat",
         backgroundPosition: "center",
       }}
     >
-      <div className="flex flex-col justify-content items-center">
+      <div className="flex flex-col items-center w-full md:w-[800px] md:mt-20">
         <HomeButton />
 
         <div className="flex place-content-end mb-8 w-full">
           <EditDoneButton isEditing={isEditing} toggleEditing={toggleEditing} />
         </div>
-        <div className="story-list grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 content-evenly">
-          <AddStoryBtn />
+        <div className="story-list w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 content-evenly">
+          <div className="flex flex-col justify-center">
+            <AddStoryBtn />
+          </div>
           {savedStories.map((story) => (
             <StoryThumbnail
               key={story.id}
