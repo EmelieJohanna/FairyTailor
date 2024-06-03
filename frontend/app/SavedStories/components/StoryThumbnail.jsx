@@ -2,17 +2,33 @@
 
 import DeleteStoryBtn from "./DeleteStoryBtn";
 
-const StoryThumbnail = ({ story, onClick, isEditing, onDelete }) => {
+const StoryThumbnail = ({
+  story,
+  onLoadFromSavedPage,
+  onLoadFromStart,
+  onDelete,
+  isEditing,
+}) => {
   return (
-    <div className="relative story-thumbnail ">
-      <div onClick={() => onClick(story)}>
-        {story.image_url && (
-          <img
-            src={story.image_url}
-            alt="Thumbnail"
-            className="w-36 h-36 object-cover rounded-lg border-solid border-4 border-dark-green cursor-pointer"
-          />
-        )}
+    <div className="story-thumbnail flex flex-col items-center">
+      <img
+        src={story.image_url}
+        alt={story.story_title}
+        className="w-full h-48 object-cover"
+      />
+      <div className="flex flex-col items-center mt-4">
+        <button
+          className="bg-blue-500 text-white py-2 px-4 rounded mb-2"
+          onClick={onLoadFromSavedPage}
+        >
+          Continue from where you left off
+        </button>
+        <button
+          className="bg-green-500 text-white py-2 px-4 rounded"
+          onClick={onLoadFromStart}
+        >
+          Start from the beginning
+        </button>
       </div>
       {isEditing && (
         <div className="absolute -top-5 right-4">

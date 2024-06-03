@@ -10,12 +10,13 @@ import heart from "/public/heart.png";
 
 export default function Home() {
   const { isLoggedIn, setIsLoggedIn } = useAuth();
-  const { setIsStoryFetched, setStoryType, setStoryHappening } = useStory();
+  const { setIsStoryFetched, setStoryType, setStoryHappening, setCurrentPage } = useStory();
 
   const handleClick = () => {
     setIsStoryFetched(false);
     setStoryType("");
     setStoryHappening("");
+    setCurrentPage(0);
   };
   
   return (
