@@ -9,6 +9,7 @@ import EditDoneButton from "./components/EditDoneBtn";
 import StoryThumbnail from "./components/StoryThumbnail";
 import StoryDetails from "./components/StoryDetails";
 import { MdKeyboardArrowLeft } from "react-icons/md";
+import DeleteStoryModal from "./components/DeleteStoryModal";
 
 const SavedStories = () => {
   const { isLoggedIn } = useAuth();
@@ -24,6 +25,8 @@ const SavedStories = () => {
   const router = useRouter();
   const [selectedStory, setSelectedStory] = useState(null);
   const [isEditing, setIsEditing] = useState(false); // State to manage edit mode
+  const [showModal, setShowModal] = useState(false);
+  const [storyToDelete, setStoryToDelete] = useState(null);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -83,7 +86,24 @@ const SavedStories = () => {
     }
   };
 
+  const openModal = (storyId) => {
+    setStoryToDelete(storyId);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setStoryToDelete(null);
+    setShowModal(false);
+  };
+
+  const confirmDelete = () => {
+    if (storyToDelete) {
+      handleDeleteStory(storyToDelete);
+      closeModal();
+    }
+  };
   return (
+<<<<<<< HEAD
     <div
       className="flex flex-col items-center"
       style={{
@@ -124,6 +144,45 @@ const SavedStories = () => {
           />
         )}
       </div>
+=======
+    <div className="p-4">
+      <MdKeyboardArrowLeft
+        onClick={() => router.push("/")}
+        className="text-4xl text-dark-green left-6"
+      />
+      <h2 className="mb-12 text-center text-2xl font-bold text-dark-green">
+        Saved Stories
+      </h2>
+
+      <div className="flex place-content-end mb-8">
+        <EditDoneButton isEditing={isEditing} toggleEditing={toggleEditing} />
+      </div>
+      <div className="story-list grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 content-evenly">
+        <AddStoryBtn />
+        {savedStories.map((story) => (
+          <StoryThumbnail
+            key={story.id}
+            className="story-thumbnail cursor-pointer"
+            onClick={() => loadStory(story)}
+            story={story}
+            isEditing={isEditing}
+            onDelete={() => openModal(story.id)}
+          />
+        ))}
+      </div>
+      {selectedStory && (
+        <StoryDetails
+          story={selectedStory}
+          onClose={() => setSelectedStory(null)}
+        />
+      )}
+      <DeleteStoryModal
+        isOpen={showModal}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+        className="absolute"
+      />
+>>>>>>> 200cdbdd7d629247817595158d373c67425ecc3f
     </div>
   );
 };

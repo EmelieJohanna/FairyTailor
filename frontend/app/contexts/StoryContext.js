@@ -7,7 +7,7 @@ export const StoryProvider = ({ children }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [storyType, setStoryType] = useState("");
   const [storyHappening, setStoryHappening] = useState("");
-  const [isStoryFetched, setIsStoryFetched] = useState(false);
+  const [isStoryFetched, setIsStoryFetched] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
 
   const handleStorySubmit = (storyText, image) => {
@@ -15,16 +15,6 @@ export const StoryProvider = ({ children }) => {
     setImageUrl(image);
     setIsStoryFetched(true);
   };
-
-  console.log(
-    "Story data:",
-    story,
-    imageUrl,
-    storyType,
-    storyHappening,
-    isStoryFetched,
-    currentPage
-  );
 
   return (
     <StoryContext.Provider
