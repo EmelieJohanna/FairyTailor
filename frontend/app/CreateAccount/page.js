@@ -63,10 +63,10 @@ export default function CreateAccount() {
 
   return (
     <div
-      className="flex flex-col items-center"
+      className="flex flex-col items-center w-full h-screen"
       style={{
         backgroundImage: "url('/bg_hearts.png')",
-        backgroundSize: "cover",
+        backgroundSize: "repeat",
         backgroundPosition: "center",
       }}
     >
