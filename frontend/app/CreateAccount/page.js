@@ -9,9 +9,27 @@ import crown from "/public/crown.png";
 export default function CreateAccount() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isUsernameUnique, setIsUsernameUnique] = useState(true);
   const router = useRouter();
 
+  const checkUsernameUniqueness = async (username) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3008/users/check/${username}`
+      );
+      const data = await response.json();
+      setIsUsernameUnique(data.available);
+    } catch (error) {
+      console.error("Error checking username availability", error);
+    }
+  };
+
   const handleCreateAccount = async () => {
+    if (!isUsernameUnique) {
+      alert("Username is already taken. Please choose another one.");
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:3008/users", {
         method: "POST",
@@ -38,6 +56,11 @@ export default function CreateAccount() {
     }
   };
 
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+    checkUsernameUniqueness(e.target.value);
+  };
+
   return (
     <div
       className="flex flex-col items-center"
@@ -62,9 +85,12 @@ export default function CreateAccount() {
           type="text"
           id="username"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={handleUsernameChange}
           className="p-2 w-[180px] mt-2 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-[#abc8c0] border-[#2f856b]"
         />
+        {!isUsernameUnique && (
+          <p className="text-red-500">Username is already taken</p>
+        )}
         <label htmlFor="password" className="mt-8 text-[#2f856b]">
           Password:
         </label>
