@@ -25,13 +25,13 @@ export default function CreateAccount() {
       });
 
       if (response.ok && password !== "" && username !== "") {
-        alert("Grattis! Du har skapat ett konto i Arbetarbaken.");
-        router.push("/login");
+        alert("Welcome! You can now create and save stories.");
+        router.push("/Login");
       } else {
-        alert("Glöm inte att fylla i användarnamn och lösenord.");
+        alert("Don't forget to enter name and password.");
       }
     } catch (error) {
-      console.error("Något gick fel.", error);
+      console.error("Something went wrong.", error);
     } finally {
       setPassword("");
       setUsername("");
