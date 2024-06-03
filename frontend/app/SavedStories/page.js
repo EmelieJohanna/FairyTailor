@@ -65,6 +65,13 @@ const SavedStories = () => {
     router.push("/storyTeller");
   };
 
+  const handleClick = () => {
+    setIsStoryFetched(false);
+    setStoryType("");
+    setStoryHappening("");
+    setCurrentPage(0);
+  };
+
   const toggleEditing = () => {
     setIsEditing(!isEditing);
     console.log("toggleEditing");
@@ -127,7 +134,7 @@ const SavedStories = () => {
         </div>
         <div className="story-list w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-0 md:gap-y-4 content-evenly">
           <div className="flex flex-col justify-center mb-16 md:mb-28">
-            <AddStoryBtn />
+            <AddStoryBtn onClick={handleClick}/>
           </div>
           {savedStories.length === 0 ? (
             <p className="text-center col-span-2 sm:col-span-3 text-dark-green">
