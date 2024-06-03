@@ -17,20 +17,25 @@ export default function Loggain() {
   const handleLogin = async () => {
     try {
       console.log("Received login request for username:", username);
+
+      const sanitizedUsername = username.replace(/[^a-zA-Z0-9]/g, "");
+      const sanitizedPassword = password.replace(/[^a-zA-Z0-9]/g, "");
+
       const response = await fetch("http://localhost:3008/sessions", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
         },
         body: JSON.stringify({
-          username: username,
-          password: password,
+          username: sanitizedUsername,
+          password: sanitizedPassword,
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
         console.log("Login response data:", data);
+
         localStorage.setItem("sessionId", data.token);
 
         const sessionId = localStorage.getItem("sessionId");
