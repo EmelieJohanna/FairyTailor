@@ -51,11 +51,11 @@ export default function StoryInput() {
       ) : (
         <div
           className="text-center flex flex-col h-[600px] justify-between md:max-w-lg rounded-lg px-48 py-24"
-          style={{
-            backgroundImage: "url('/bg_hearts.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+          // style={{
+          //   backgroundImage: "url('/bg_hearts.png')",
+          //   backgroundSize: "cover",
+          //   backgroundPosition: "center",
+          // }}
         >
           <div className="flex flex-col">
             <h2 className="mb-8 text-[#2f856b] text-2xl font-bold">
