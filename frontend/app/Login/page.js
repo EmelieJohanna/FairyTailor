@@ -11,12 +11,16 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 export default function Loggain() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const { isLoggedIn, setIsLoggedIn } = useAuth();
   const router = useRouter();
 
   const handleLogin = async () => {
     try {
-      console.log("Received login request for username:", username);
+      if (!username || !password) {
+        setErrorMessage("Please enter both username and password"); // Set error message if fields are empty
+        return;
+      }
 
       const sanitizedUsername = username.replace(/[^a-zA-Z0-9]/g, "");
       const sanitizedPassword = password.replace(/[^a-zA-Z0-9]/g, "");
@@ -41,14 +45,15 @@ export default function Loggain() {
         const sessionId = localStorage.getItem("sessionId");
 
         router.push("/");
+        setIsLoggedIn(true);
+        setErrorMessage(""); // Clear the error message on successful login
       } else {
-        alert("Wrong username or password.");
+        setErrorMessage("Wrong username or password"); // Set the error message
       }
     } catch (error) {
       console.error("Something went wrong:", error);
-      alert("Login failed");
+      setErrorMessage("Login failed"); // Set the error message for unexpected errors
     } finally {
-      setIsLoggedIn(true);
       setPassword("");
       setUsername("");
     }
@@ -100,6 +105,7 @@ export default function Loggain() {
           className="p-2 w-[180px] mb-10 mt-2 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-[#abc8c0] border-[#2f856b]"
         />
         <Button onClick={handleLogin}>Log in</Button>
+        {errorMessage && <p className="mt-4 text-red-600">{errorMessage}</p>}
       </div>
     </div>
   );
