@@ -18,6 +18,7 @@ export default function StoryOutput() {
     setCurrentPage,
   } = useStory();
   const [storyChunks, setStoryChunks] = useState([]);
+  const [saveMessage, setSaveMessage] = useState("");
 
   useEffect(() => {
     console.log("Story state in StoryOutput:", {
@@ -75,6 +76,8 @@ export default function StoryOutput() {
   const saveStory = async () => {
     const token = localStorage.getItem("sessionId");
 
+    setSaveMessage("Saving..."); // Set the "Saving..." message immediately
+
     try {
       const response = await fetch("http://localhost:3008/saveStory", {
         method: "POST",
@@ -97,8 +100,18 @@ export default function StoryOutput() {
 
       const data = await response.json();
       console.log(data.message);
+      setSaveMessage("Your story has been saved");
+      setTimeout(() => {
+        setSaveMessage("");
+      }, 2000);
     } catch (error) {
       console.error("Error saving story", error);
+      setSaveMessage("Failed to save story");
+
+      // Set a timeout to clear the save message after 2 seconds
+      setTimeout(() => {
+        setSaveMessage("");
+      }, 2000);
     }
   };
 
@@ -142,12 +155,15 @@ export default function StoryOutput() {
       </div>
       <div className="flex flex-col items-center">
         {isLoggedIn ? (
-          <button
-            onClick={saveStory}
-            className="p-3 w-[200px] bg-[#9bf2d9] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
-          >
-            Save story
-          </button>
+          <div>
+            <button
+              onClick={saveStory}
+              className="p-3 w-[200px] bg-[#9bf2d9] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer mb-2"
+            >
+              Save story
+            </button>
+            {saveMessage && <p className="text-[#2f856b]">{saveMessage}</p>}
+          </div>
         ) : (
           <button
             onClick={() =>

@@ -82,7 +82,7 @@ export default function Home() {
               </div>
             </Link>
             <button
-              className="text-[#2f856b] hover:text-[#3da284] no-underline mt-8 text-[16px] bg-transparent border-none cursor-pointer"
+              className="text-[#2f856b] hover:text-[#3da284] underline m-4 text-[16px] bg-transparent border-none cursor-pointer"
               onClick={() => setIsLoggedIn(false)}
             >
               Log out
@@ -97,7 +97,7 @@ export default function Home() {
             </Link>
             <Link
               href="/createAccount"
-              className="mt-2 mb-2 no-underline text-[14px] text-[#2f856b] hover:text-[#3da284]"
+              className="m-4 text-[14px] text-[#2f856b] hover:text-[#3da284]"
             >
               Create Account
             </Link>
