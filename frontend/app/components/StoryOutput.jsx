@@ -76,8 +76,6 @@ export default function StoryOutput() {
   const saveStory = async () => {
     const token = localStorage.getItem("sessionId");
 
-    setSaveMessage("Saving..."); // Set the "Saving..." message immediately
-
     try {
       const response = await fetch("http://localhost:3008/saveStory", {
         method: "POST",
@@ -156,13 +154,13 @@ export default function StoryOutput() {
       <div className="flex flex-col items-center">
         {isLoggedIn ? (
           <div>
+            {saveMessage && <p className="text-[#2f856b]">{saveMessage}</p>}
             <button
               onClick={saveStory}
-              className="p-3 w-[200px] bg-[#9bf2d9] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer mb-2"
+              className="p-3 w-[200px] bg-[#9bf2d9] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer mt-2"
             >
               Save story
             </button>
-            {saveMessage && <p className="text-[#2f856b]">{saveMessage}</p>}
           </div>
         ) : (
           <button
