@@ -15,17 +15,17 @@ const StoryThumbnail = ({
         <img
           src={story.image_url}
           alt={story.story_title}
-          className="w-[160px] h-auto md:w-[200px] object-cover rounded-lg"
+          className="w-[160px] h-auto md:w-[200px] object-cover rounded-lg border-solid border-dark-green"
         />
         <div className="flex flex-col items-center mt-4">
           <button
-            className="p-1 md:p-3 w-[160px] md:w-[200px] text-[12px] text-center bg-[#9bf2d9] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none"
+            className="p-1 md:p-2 w-[160px] md:w-[200px] md:text-[16px] text-center bg-[#9bf2d9] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none"
             onClick={onLoadFromSavedPage}
           >
             Continue
           </button>
           <button
-            className="p-1 md:p-3  mt-2 w-[160px] md:w-[200px] text-[12px] text-center bg-[#9bf2d9] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none"
+            className="p-1 md:p-2  mt-2 w-[160px] md:w-[200px] md:text-[16px] text-center bg-[#9bf2d9] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none"
             onClick={onLoadFromStart}
           >
             Start from beginning

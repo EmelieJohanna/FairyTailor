@@ -129,7 +129,24 @@ const SavedStories = () => {
           <div className="flex flex-col justify-center mb-16 md:mb-28">
             <AddStoryBtn />
           </div>
-          {savedStories.map((story) => (
+          {savedStories.length === 0 ? (
+            <p className="text-center col-span-2 sm:col-span-3 text-dark-green">
+              No saved stories
+            </p>
+          ) : (
+            savedStories.map((story) => (
+              <StoryThumbnail
+                key={story.id}
+                className="story-thumbnail cursor-pointer"
+                onLoadFromSavedPage={() => loadStory(story, true)}
+                onLoadFromStart={() => loadStory(story, false)}
+                story={story}
+                isEditing={isEditing}
+                onDelete={() => openModal(story.id)}
+              />
+            ))
+          )}
+          {/* {savedStories.map((story) => (
             <StoryThumbnail
               key={story.id}
               className="story-thumbnail cursor-pointer"
@@ -139,7 +156,7 @@ const SavedStories = () => {
               isEditing={isEditing}
               onDelete={() => openModal(story.id)}
             />
-          ))}
+          ))} */}
         </div>
 
         {selectedStory && (
