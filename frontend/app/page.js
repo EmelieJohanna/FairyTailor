@@ -61,7 +61,7 @@ export default function Home() {
           onClick={handleClick}
           className="no-underline"
         >
-          <div className="p-3 w-[200px] text-center text-[16px] bg-[#d6fff3] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none">
+          <div className="p-3 w-[200px] text-center text-[16px] bg-medium-green text-black hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none">
             Start a Story
           </div>
         </Link>
@@ -91,7 +91,7 @@ export default function Home() {
         ) : (
           <div className="flex flex-col items-center">
             <Link href="/login" className="no-underline">
-              <div className="p-3 w-[200px] text-center text-[16px] bg-[#d6fff3] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none">
+              <div className="p-3 w-[200px] text-center text-[16px] bg-medium-green text-black hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none">
                 Log in
               </div>
             </Link>
