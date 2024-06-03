@@ -73,13 +73,16 @@ const SavedStories = () => {
   const handleDeleteStory = async (storyId) => {
     try {
       const token = localStorage.getItem("sessionId");
-      await fetch(`http://localhost:3008/deleteStory/${storyId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `http://localhost:3008/deleteStory/${storyId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response.ok) {
         setSavedStories(savedStories.filter((story) => story.id !== storyId));
       } else {
