@@ -14,7 +14,7 @@ function EditDoneBtn({ isEditing, toggleEditing }) {
   return (
     <button
       onClick={toggleEditing}
-      className="flex items-center justify-center px-6 py-2 bg-medium-green border-none text-dark-green font-bold rounded-full shadow-md"
+      className="flex items-center justify-center px-6 py-2 bg-dark-green border-none text-white font-thin rounded-full shadow-md"
     >
       {isEditing ? "Done" : "Edit"}
     </button>

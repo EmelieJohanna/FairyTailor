@@ -6,8 +6,8 @@ function AddStoryBtn() {
     <>
       <div className="flex justify-center items-center">
         <Link href={"/storyTeller"}>
-          <button className=" flex justify-center items-center h-28 w-28 rounded-full bg-medium-green shadow-lg border-none">
-            <FaPlus className="h-20 w-20 text-dark-green" />
+          <button className=" flex justify-center items-center h-16 w-16 rounded-full bg-dark-pink text-white shadow-lg border-[3px] border-solid border-dark-green">
+            <FaPlus className="w-16 h-10 text-white" />
           </button>
         </Link>
       </div>

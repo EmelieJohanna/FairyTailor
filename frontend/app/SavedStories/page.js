@@ -10,6 +10,7 @@ import StoryThumbnail from "./components/StoryThumbnail";
 import StoryDetails from "./components/StoryDetails";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import DeleteStoryModal from "./components/DeleteStoryModal";
+import HomeButton from "../components/HomeButton";
 
 const SavedStories = () => {
   const { isLoggedIn } = useAuth();
@@ -103,25 +104,22 @@ const SavedStories = () => {
     }
   };
   return (
-<<<<<<< HEAD
     <div
-      className="flex flex-col items-center"
+      className="flex flex-col items-center w-96"
       style={{
         backgroundImage: "url('/bg_hearts.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className="flex flex-col justify-content items-center px-48 py-24">
-        {" "}
-        <MdKeyboardArrowLeft
-          onClick={() => router.push("/")}
-          className="text-4xl text-dark-green fixed left-6"
-        />
-        <h2 className="mb-12 text-center text-2xl font-bold text-dark-green">
-          Saved Stories
-        </h2>
-        <div className="flex place-content-end mb-8">
+      <div className="flex flex-col w-full p-52">
+        <HomeButton />
+
+        {/* <h2 className="mb-12 text-center text-2xl font-bold text-dark-green">
+        Saved Stories
+      </h2> */}
+
+        <div className="flex place-content-end mb-8 w-full">
           <EditDoneButton isEditing={isEditing} toggleEditing={toggleEditing} />
         </div>
         <div className="story-list grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 content-evenly">
@@ -133,56 +131,24 @@ const SavedStories = () => {
               onClick={() => loadStory(story)}
               story={story}
               isEditing={isEditing}
-              onDelete={handleDeleteStory}
+              onDelete={() => openModal(story.id)}
             />
           ))}
         </div>
+
         {selectedStory && (
           <StoryDetails
             story={selectedStory}
             onClose={() => setSelectedStory(null)}
           />
         )}
-      </div>
-=======
-    <div className="p-4">
-      <MdKeyboardArrowLeft
-        onClick={() => router.push("/")}
-        className="text-4xl text-dark-green left-6"
-      />
-      <h2 className="mb-12 text-center text-2xl font-bold text-dark-green">
-        Saved Stories
-      </h2>
-
-      <div className="flex place-content-end mb-8">
-        <EditDoneButton isEditing={isEditing} toggleEditing={toggleEditing} />
-      </div>
-      <div className="story-list grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 content-evenly">
-        <AddStoryBtn />
-        {savedStories.map((story) => (
-          <StoryThumbnail
-            key={story.id}
-            className="story-thumbnail cursor-pointer"
-            onClick={() => loadStory(story)}
-            story={story}
-            isEditing={isEditing}
-            onDelete={() => openModal(story.id)}
-          />
-        ))}
-      </div>
-      {selectedStory && (
-        <StoryDetails
-          story={selectedStory}
-          onClose={() => setSelectedStory(null)}
+        <DeleteStoryModal
+          isOpen={showModal}
+          onClose={closeModal}
+          onConfirm={confirmDelete}
+          className="absolute"
         />
-      )}
-      <DeleteStoryModal
-        isOpen={showModal}
-        onClose={closeModal}
-        onConfirm={confirmDelete}
-        className="absolute"
-      />
->>>>>>> 200cdbdd7d629247817595158d373c67425ecc3f
+      </div>
     </div>
   );
 };
