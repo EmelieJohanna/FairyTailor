@@ -26,7 +26,7 @@ export default function CreateAccount() {
 
       if (response.ok && password !== "" && username !== "") {
         alert("Welcome! You can now create and save stories.");
-        router.push("/Login");
+        router.push("/login");
       } else {
         alert("Don't forget to enter name and password.");
       }

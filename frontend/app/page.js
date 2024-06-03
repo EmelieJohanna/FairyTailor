@@ -9,7 +9,7 @@ import storyBear from "/public/storyBear_transparent.png";
 import heart from "/public/heart.png";
 
 export default function Home() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
   const { setIsStoryFetched, setStoryType, setStoryHappening } = useStory();
 
   const handleClick = () => {
@@ -82,7 +82,7 @@ export default function Home() {
                 </Link>
               </span>
             </button>
-            <button className="text-[#2f856b] hover:text-[#3da284] no-underline mt-8 text-[16px] bg-transparent border-none cursor-pointer">
+            <button className="text-[#2f856b] hover:text-[#3da284] no-underline mt-8 text-[16px] bg-transparent border-none cursor-pointer" onClick={() => setIsLoggedIn(false)}>
               Log out
             </button>
           </div>
