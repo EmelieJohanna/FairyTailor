@@ -47,6 +47,23 @@ function generateOTP() {
   return token.toString();
 }
 
+app.get("/users/check/:username", async (req, res) => {
+  const { username } = req.params;
+  try {
+    const result = await query("SELECT * FROM users WHERE username = ?", [
+      username,
+    ]);
+    if (result.length > 0) {
+      res.json({ available: false });
+    } else {
+      res.json({ available: true });
+    }
+  } catch (error) {
+    console.error("Error checking username availability", error);
+    res.status(500).send("Error checking username availability");
+  }
+});
+
 app.post("/users", async (req, res) => {
   const { username, password } = req.body;
 
