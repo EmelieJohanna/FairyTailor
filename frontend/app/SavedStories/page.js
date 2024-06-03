@@ -105,14 +105,14 @@ const SavedStories = () => {
   };
   return (
     <div
-      className="flex flex-col items-center w-96"
+      className="flex flex-col items-center justify-center w-full h-screen"
       style={{
         backgroundImage: "url('/bg_hearts.png')",
-        backgroundSize: "cover",
+        backgroundSize: "repeat",
         backgroundPosition: "center",
       }}
     >
-      <div className="flex flex-col w-full p-52">
+      <div className="flex flex-col justify-content items-center">
         <HomeButton />
 
         {/* <h2 className="mb-12 text-center text-2xl font-bold text-dark-green">
