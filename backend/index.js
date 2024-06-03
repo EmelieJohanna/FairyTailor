@@ -31,7 +31,7 @@ const pool = mysql.createPool({
   user: "root",
   password: "root",
   database: "story_tailor",
-  port: 3006,
+  port: 3306,
 });
 
 // help function to make code look nicer
@@ -125,16 +125,18 @@ app.post("/sessions", async (req, res) => {
 });
 
 app.post("/storyTeller", async (req, res) => {
-  const storyType = req.body.storyType || "fairytale";
-  const storyHappening =
-    req.body.storyHappening || "a princess who fell from a tree";
+  const { storyType, storyHappening, age, protagonist, protagonistName } =
+    req.body;
+  // const storyType = req.body.storyType || "fairytale";
+  // const storyHappening =
+  //   req.body.storyHappening || "a princess who fell from a tree";
 
   try {
     const completion = await openai.chat.completions.create({
       messages: [
         {
           role: "user",
-          content: `Tell me a ${storyType} story for children about ${storyHappening} that's interesting.`,
+          content: `Tell me a ${storyType} story for children age ${age} that's interesting about a ${protagonist} named ${protagonistName} and ${storyHappening}.`,
         },
       ],
       model: "gpt-3.5-turbo",

@@ -13,6 +13,12 @@ export default function StoryInput() {
     storyHappening,
     setStoryHappening,
     handleStorySubmit,
+    age,
+    setAge,
+    protagonist,
+    setProtagonist,
+    protagonistName,
+    setProtagonistName,
   } = useStory();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,12 +29,21 @@ export default function StoryInput() {
       setIsLoading(true);
       const sanitizedStoryType = sanitizeInput(storyType);
       const sanitizedStoryHappening = sanitizeInput(storyHappening);
+      const sanitizedAge = sanitizeInput(age);
+      const sanitizedProtagonist = sanitizeInput(protagonist);
+      const sanitizedProtagonistName = sanitizeInput(protagonistName);
       const storyResponse = await fetch("http://localhost:3008/storyTeller", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ sanitizedStoryType, sanitizedStoryHappening }),
+        body: JSON.stringify({
+          storyType: sanitizedStoryType,
+          storyHappening: sanitizedStoryHappening,
+          age: sanitizedAge,
+          protagonist: sanitizedProtagonist,
+          protagonistName: sanitizedProtagonistName,
+        }),
       });
       const storyData = await storyResponse.json();
       const storyText = storyData.story;
@@ -69,7 +84,31 @@ export default function StoryInput() {
               type="text"
               value={storyType}
               onChange={(e) => setStoryType(sanitizeInput(e.target.value))}
-              placeholder="Enter a story type"
+              placeholder="What is the story genre?"
+              className="p-2 mb-4 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
+            />
+
+            <input
+              type="text"
+              value={age}
+              onChange={(e) => setAge(sanitizeInput(e.target.value))}
+              placeholder="How old are you?"
+              className="p-2 mb-4 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
+            />
+            <input
+              type="text"
+              value={protagonist}
+              onChange={(e) => setProtagonist(sanitizeInput(e.target.value))}
+              placeholder="What being is main character?"
+              className="p-2 mb-4 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
+            />
+            <input
+              type="text"
+              value={protagonistName}
+              onChange={(e) =>
+                setProtagonistName(sanitizeInput(e.target.value))
+              }
+              placeholder="Enter main characters' name.."
               className="p-2 mb-4 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
             />
             <input

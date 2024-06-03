@@ -17,7 +17,7 @@ const StoryThumbnail = ({
           alt={story.story_title}
           className="w-[160px] h-auto md:w-[200px] object-cover rounded-lg border-solid border-dark-green"
         />
-        <div className="flex flex-col items-center mt-4">
+        <div className="flex flex-col items-center mt-4 mb-8">
           <button
             className="p-1 md:p-2 w-[160px] md:w-[200px] md:text-[16px] text-center bg-[#9bf2d9] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer active:shadow-none"
             onClick={onLoadFromSavedPage}

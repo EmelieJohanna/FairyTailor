@@ -7,6 +7,9 @@ export const StoryProvider = ({ children }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [storyType, setStoryType] = useState("");
   const [storyHappening, setStoryHappening] = useState("");
+  const [age, setAge] = useState("");
+  const [protagonist, setProtagonist] = useState("");
+  const [protagonistName, setProtagonistName] = useState("");
   const [isStoryFetched, setIsStoryFetched] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -29,6 +32,12 @@ export const StoryProvider = ({ children }) => {
         setStoryType,
         storyHappening,
         setStoryHappening,
+        age,
+        setAge,
+        protagonist,
+        setProtagonist,
+        protagonistName,
+        setProtagonistName,
         handleStorySubmit,
         currentPage,
         setCurrentPage,
