@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./StarsLoader.module.css";
 
 const StarsLoader = ({ count }) => {
@@ -21,7 +20,7 @@ const StarsLoader = ({ count }) => {
       star.alt = "Star";
       star.className = styles.star;
 
-      const xPos = Math.random() * (containerWidth - 20); // dela med 20 så de håller sig innanför containern
+      const xPos = Math.random() * (containerWidth - 20); // Ensure stars stay within the container
       const yPos = Math.random() * (containerHeight - 20);
 
       const size = Math.random() * 2 + 0.5;
@@ -39,7 +38,9 @@ const StarsLoader = ({ count }) => {
   return (
     <div className="flex flex-col items-center">
       <div ref={starsContainerRef} className={styles.starsContainer}></div>
-      <p className="loader-text text-yellow-600 text-xl italic font-sans">
+      <p
+        className={`${styles.loaderText} text-yellow-600 text-xl italic font-sans`}
+      >
         Writing your Story...
       </p>
     </div>
