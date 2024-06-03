@@ -5,6 +5,7 @@ import { useState } from "react";
 import Button from "../components/Button";
 import Image from "next/image";
 import crown from "/public/crown.png";
+import { MdKeyboardArrowLeft } from "react-icons/md";
 
 export default function CreateAccount() {
   const [username, setUsername] = useState("");
@@ -70,6 +71,12 @@ export default function CreateAccount() {
         backgroundPosition: "center",
       }}
     >
+      <button
+        onClick={() => router.push("/")}
+        className="p-4 fixed top-2 left-0 bg-transparent border-none"
+      >
+        <MdKeyboardArrowLeft className="text-4xl text-dark-green left-6" />
+      </button>
       <div className="flex flex-col justify-content items-center">
         <p className="mt-8 text-[#2f856b] text-2xl font-bold">Create Account</p>
         <Image
