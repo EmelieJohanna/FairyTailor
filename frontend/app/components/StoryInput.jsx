@@ -16,15 +16,19 @@ export default function StoryInput() {
   } = useStory();
   const [isLoading, setIsLoading] = useState(false);
 
+  const sanitizeInput = (input) => input.replace(/[^a-zA-Z0-9 ]/g, "");
+
   const fetchStory = async () => {
     try {
       setIsLoading(true);
+      const sanitizedStoryType = sanitizeInput(storyType);
+      const sanitizedStoryHappening = sanitizeInput(storyHappening);
       const storyResponse = await fetch("http://localhost:3008/storyTeller", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ storyType, storyHappening }),
+        body: JSON.stringify({ sanitizedStoryType, sanitizedStoryHappening }),
       });
       const storyData = await storyResponse.json();
       const storyText = storyData.story;
@@ -32,7 +36,7 @@ export default function StoryInput() {
       const imageResponse = await axios.post(
         "http://localhost:3008/generateImage",
         {
-          prompt: storyHappening,
+          prompt: sanitizedStoryHappening,
         }
       );
       const imageUrl = imageResponse.data.image_url;
@@ -64,14 +68,14 @@ export default function StoryInput() {
             <input
               type="text"
               value={storyType}
-              onChange={(e) => setStoryType(e.target.value)}
+              onChange={(e) => setStoryType(sanitizeInput(e.target.value))}
               placeholder="Enter a story type"
               className="p-2 mb-4 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
             />
             <input
               type="text"
               value={storyHappening}
-              onChange={(e) => setStoryHappening(e.target.value)}
+              onChange={(e) => setStoryHappening(sanitizeInput(e.target.value))}
               placeholder="What is the main event?"
               className="p-2 mb-4 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
             />
