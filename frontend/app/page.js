@@ -19,8 +19,11 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center p-24">
-      <svg height="100" width="440">
+    <main className="flex flex-col items-center justify-center w-full h-screen overflow-hidden">
+      <svg
+        className="w-[600px] sm:w-[800px] md:w-[800px] lg:w-[800px] xl:w-[800px] h-auto"
+        viewBox="0 0 440 100"
+      >
         <defs>
           <style>
             @import
@@ -28,13 +31,14 @@ export default function Home() {
           </style>
         </defs>
         <text
-          x="50"
+          x="50%"
           y="60"
           fill="white"
           stroke="#2f856b"
-          fontSize="72"
+          fontSize="2.5rem"
           fontFamily="Poetsen One"
           fontWeight="bold"
+          textAnchor="middle"
         >
           FairyTailor
         </text>
@@ -44,7 +48,7 @@ export default function Home() {
       </p>
 
       <Image
-        className="w-[300px] md:w-[300] h-auto mb-10"
+        className="w-[240px] sm:w-[300px] md:w-[300] h-auto mb-10"
         src={storyBear}
         alt="Cute bear cartoon"
         priority
