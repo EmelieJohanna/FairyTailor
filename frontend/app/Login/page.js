@@ -70,10 +70,10 @@ export default function Loggain() {
     >
       <button
         onClick={() => router.push("/")}
-        className="p-4 fixed top-2 left-0 bg-transparent border-none"
+        className="p-4 fixed top-3 left-0 lg:left-32 lg:mt-10 bg-transparent border-none"
       >
-        <MdKeyboardArrowLeft className="text-4xl text-dark-green left-6" />
-      </button>{" "}
+        <MdKeyboardArrowLeft className="text-4xl lg:text-6xl text-[#549d87] left-6 cursor-pointer" />
+      </button>
       <div className="flex flex-col justify-content items-center">
         <p className="font-poetsen-one mt-8 text-[#2f856b] text-2xl font-bold">
           Login

@@ -22,7 +22,6 @@ export default function StoryOutput() {
   const [saveMessage, setSaveMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-
   useEffect(() => {
     console.log("Story state in StoryOutput:", {
       story,
@@ -141,11 +140,13 @@ export default function StoryOutput() {
         <div>
           <button
             onClick={prevPage}
-            className="text-lg bg-transparent text-black border-none cursor-pointer"
+            className={`text-lg bg-transparent text-black border-none cursor-pointer ${
+              currentPage === 0 ? "hidden" : ""
+            }`}
             disabled={currentPage === 0}
           >
             <span className="flex items-center">
-              <MdKeyboardArrowLeft className="text-2xl text-[#DE8888]" />
+              <MdKeyboardArrowLeft className="text-2xl text-[#DE8888] disabled:text-grey-200" />
               Previous
             </span>
           </button>
@@ -153,7 +154,9 @@ export default function StoryOutput() {
         <div>
           <button
             onClick={nextPage}
-            className="text-lg bg-transparent text-black border-none cursor-pointer"
+            className={`text-lg bg-transparent text-black border-none cursor-pointer ${
+              currentPage >= storyChunks.length - 1 ? "hidden" : ""
+            }`}
             disabled={currentPage >= storyChunks.length - 1}
           >
             <span className="flex items-center">
@@ -163,31 +166,31 @@ export default function StoryOutput() {
         </div>
       </div>
       <div className="flex flex-col items-center">
-        <div>
+        <div className="w-full">
           {saveMessage && <p className="text-[#2f856b]">{saveMessage}</p>}
-          <div className="flex space-x-4">
+          <div className="flex space-x-10 md:space-x-4">
             {isLoggedIn ? (
               <button
                 onClick={saveStory}
-                className="p-3 w-[200px] bg-[#9bf2d9] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer mt-2"
+                className=" w-[100px] md:w-[180px] bg-[#9bf2d9] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer mt-2 active:shadow-none"
               >
                 Save story
               </button>
             ) : (
               <button
                 onClick={handleSaveStoryClick}
-                className="p-3 w-[200px] bg-[#9bf2d9] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer mt-2"
+                className=" w-[100px] md:w-[180px] bg-[#9bf2d9] text-[#2f856b] hover:text-[#3da284] border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b] cursor-pointer mt-2 active:shadow-none"
               >
                 Save story
               </button>
             )}
             <Link href="/" className="no-underline">
               <div
-                className="p-3 w-[200px] text-center text-[14px] bg-[#9bf2d9] text-[#2f856b]
+                className="p-3 w-[100px] md:w-[180px] text-center text-[14px] bg-[#9bf2d9] text-[#2f856b]
               hover:text-[#3da284] border-[2px] border-solid shadow-md
-              shadow-gray-400 border-[#2f856b] cursor-pointer mt-2"
+              shadow-gray-400 border-[#2f856b] cursor-pointer mt-2 active:shadow-none"
               >
-                Kill story
+                Discard story
               </div>
             </Link>
           </div>
@@ -201,7 +204,8 @@ export default function StoryOutput() {
   );
 }
 
-{/* // "use client";
+{
+  /* // "use client";
 
 // import { useAuth } from "../contexts/AuthContext";
 // import { useStory } from "../contexts/StoryContext";
@@ -260,4 +264,5 @@ export default function StoryOutput() {
 //       )}
 //     </div>
 //   );
-// } */}
+// } */
+}
