@@ -8,7 +8,6 @@ import AddStoryBtn from "./components/AddStoryBtn";
 import EditDoneButton from "./components/EditDoneBtn";
 import StoryThumbnail from "./components/StoryThumbnail";
 import StoryDetails from "./components/StoryDetails";
-import { MdKeyboardArrowLeft } from "react-icons/md";
 import DeleteStoryModal from "./components/DeleteStoryModal";
 import HomeButton from "../components/HomeButton";
 
@@ -25,7 +24,7 @@ const SavedStories = () => {
   const [savedStories, setSavedStories] = useState([]);
   const router = useRouter();
   const [selectedStory, setSelectedStory] = useState(null);
-  const [isEditing, setIsEditing] = useState(false); // State to manage edit mode
+  const [isEditing, setIsEditing] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [storyToDelete, setStoryToDelete] = useState(null);
 
@@ -55,13 +54,13 @@ const SavedStories = () => {
     }
   }, [isLoggedIn]);
 
-  const loadStory = (story) => {
+  const loadStory = (story, startFromSavedPage) => {
     console.log("Loading story:", story);
     setStory(story.story_text || "");
     setImageUrl(story.image_url || "");
     setStoryType(story.story_type || "");
     setStoryHappening(story.story_happening || "");
-    setCurrentPage(story.current_page || 0);
+    setCurrentPage(startFromSavedPage ? story.current_page : 0);
     setIsStoryFetched(true);
     router.push("/storyTeller");
   };
@@ -103,6 +102,7 @@ const SavedStories = () => {
       closeModal();
     }
   };
+
   return (
     <div
       className="flex flex-col items-center justify-center w-full h-screen"
@@ -115,10 +115,6 @@ const SavedStories = () => {
       <div className="flex flex-col justify-content items-center">
         <HomeButton />
 
-        {/* <h2 className="mb-12 text-center text-2xl font-bold text-dark-green">
-        Saved Stories
-      </h2> */}
-
         <div className="flex place-content-end mb-8 w-full">
           <EditDoneButton isEditing={isEditing} toggleEditing={toggleEditing} />
         </div>
@@ -128,7 +124,8 @@ const SavedStories = () => {
             <StoryThumbnail
               key={story.id}
               className="story-thumbnail cursor-pointer"
-              onClick={() => loadStory(story)}
+              onLoadFromSavedPage={() => loadStory(story, true)}
+              onLoadFromStart={() => loadStory(story, false)}
               story={story}
               isEditing={isEditing}
               onDelete={() => openModal(story.id)}
