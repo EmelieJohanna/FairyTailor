@@ -51,7 +51,8 @@ export default function StoryInput() {
       const imageResponse = await axios.post(
         "http://localhost:3008/generateImage",
         {
-          prompt: sanitizedStoryHappening,
+          prompt: sanitizedProtagonist,
+          sanitizedStoryHappening,
         }
       );
       const imageUrl = imageResponse.data.image_url;
@@ -85,39 +86,47 @@ export default function StoryInput() {
               value={storyType}
               onChange={(e) => setStoryType(sanitizeInput(e.target.value))}
               placeholder="What is the story genre?"
-              className="p-2 mb-4 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
+              className="p-2 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
             />
-
+            <p className="flex flex-start mb-4 mt-1 text-xs text-dark-green">
+              Ex. happy, sad, scary, funny{" "}
+            </p>
             <input
               type="text"
               value={age}
               onChange={(e) => setAge(sanitizeInput(e.target.value))}
               placeholder="How old are you?"
-              className="p-2 mb-4 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
+              className="p-2 mb-6 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
             />
             <input
               type="text"
               value={protagonist}
               onChange={(e) => setProtagonist(sanitizeInput(e.target.value))}
-              placeholder="What being is main character?"
-              className="p-2 mb-4 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
+              placeholder="Who is the main character?"
+              className="p-2 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
             />
+            <p className="flex flex-start mb-4 mt-1 text-xs text-dark-green">
+              Ex. boy, girl, robot, panda, princess{" "}
+            </p>{" "}
             <input
               type="text"
               value={protagonistName}
               onChange={(e) =>
                 setProtagonistName(sanitizeInput(e.target.value))
               }
-              placeholder="Enter main characters' name.."
-              className="p-2 mb-4 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
+              placeholder="Enter main character's name"
+              className="p-2 mb-6 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
             />
             <input
               type="text"
               value={storyHappening}
               onChange={(e) => setStoryHappening(sanitizeInput(e.target.value))}
               placeholder="What is the main event?"
-              className="p-2 mb-4 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
+              className="p-2 focus:outline-none bg-[#fff0eb] text-black border-[2px] border-solid shadow-md shadow-gray-400 border-[#2f856b]"
             />
+            <p className="flex flex-start mb-4 mt-1 text-xs text-dark-green">
+              Ex. meeting a wolf in the forest{" "}
+            </p>
           </div>
 
           <div>
