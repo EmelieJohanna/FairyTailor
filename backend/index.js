@@ -156,7 +156,7 @@ app.post("/generateImage", async (req, res) => {
     const { prompt } = req.body;
     const response = await openai.images.generate({
       model: "dall-e-3",
-      prompt: `Create one simple cartoon image for children about ${prompt} in two pictures`,
+      prompt: `Create one simple cartoon image for children about ${prompt} in two pictures. The pictures should not look the same. But the main character must look identical.`,
       n: 1,
       size: "1024x1024",
     });

@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center w-full h-screen overflow-hidden">
       <svg
-        className="w-[600px] sm:w-[800px] md:w-[800px] lg:w-[800px] xl:w-[800px] h-auto"
+        className="w-[600px] md:w-[800px] lg:w-[800px] xl:w-[800px] h-auto"
         viewBox="0 0 440 100"
       >
         <defs>
